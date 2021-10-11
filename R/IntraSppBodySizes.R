@@ -67,6 +67,7 @@ ed_HW_sub<-ed[complete.cases(ed[, "HW"]),]
 nrow(ed_HW_sub)
 head(ed_HW_sub)
 ed_hw <- lm(ed_HW_sub$HW ~ ed_HW_sub$syr + ed_HW_sub$sDOY + ed_HW_sub$Ldens + ed_HW_sub$SiteShort)
+ed_hw <- gls(HW ~ syr + sDOY + Ldens + SiteShort,na.action=na.omit, data=ed_HW_sub) # did not include a yr autocorr because year is repeated- need to decide how to deal with repeated measures
 summary(ed_hw)
 plot(ed_HW_sub$HW ~ ed_HW_sub$yr)
 abline(lm(ed_HW_sub$HW ~ ed_HW_sub$yr))
