@@ -95,16 +95,19 @@ abline(lm(po_BL_sub$BL ~ po_BL_sub$yr))
 ####hs
 hs_HW_sub<-hs[complete.cases(hs[, "HW"]),]
 nrow(hs_HW_sub)
+head(hs_HW_sub)
 hs_hw <- lm(hs_HW_sub$HW ~ hs_HW_sub$syr + hs_HW_sub$sDOY + hs_HW_sub$Ldens + hs_HW_sub$SiteShort)
 summary(hs_hw)
 plot(hs_HW_sub$HW ~ hs_HW_sub$yr)
-abline(lm(hs_HW_sub$HW ~ hs_HW_sub$yr))
+abline(lm(hs_HW_sub$HW[hs_HW_sub$Season=="early"] ~ hs_HW_sub$yr[hs_HW_sub$Season=="early"]))
+abline(lm(hs_HW_sub$HW[hs_HW_sub$Season=="late"] ~ hs_HW_sub$yr[hs_HW_sub$Season=="late"]))
 
 hs_BL_sub<-hs[complete.cases(hs[ , "BL"]),]
 hs_bl <- lm(hs_BL_sub$BL ~ hs_BL_sub$syr + hs_BL_sub$sDOY + hs_BL_sub$Ldens + hs_BL_sub$SiteShort)
 summary(hs_bl)
 plot(hs_BL_sub$BL ~ hs_BL_sub$yr)
-abline(lm(hs_BL_sub$BL ~ hs_BL_sub$yr))
+abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="early"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="early"]))
+abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="late"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="late"]))
 
 
 ##########################################
