@@ -67,16 +67,23 @@ ed_HW_sub<-ed[complete.cases(ed[, "HW"]),]
 nrow(ed_HW_sub)
 head(ed_HW_sub)
 ed_hw <- lm(ed_HW_sub$HW ~ ed_HW_sub$syr + ed_HW_sub$sDOY + ed_HW_sub$Ldens + ed_HW_sub$SiteShort)
+ed_hw <- lmer(ed_HW_sub$HW ~ ed_HW_sub$syr + ed_HW_sub$sDOY + ed_HW_sub$Ldens +  (1 | ed_HW_sub$SiteShort)) ##error :/
 ed_hw <- gls(HW ~ syr + sDOY + Ldens + SiteShort,na.action=na.omit, data=ed_HW_sub) # did not include a yr autocorr because year is repeated- need to decide how to deal with repeated measures
 summary(ed_hw)
 plot(ed_HW_sub$HW ~ ed_HW_sub$yr)
 abline(lm(ed_HW_sub$HW ~ ed_HW_sub$yr))
+abline(lm(ed_HW_sub$HW[ed_HW_sub$Season=="early"] ~ ed_HW_sub$yr[ed_HW_sub$Season=="early"]),lty=2)
+abline(lm(ed_HW_sub$HW[ed_HW_sub$Season=="late"] ~ ed_HW_sub$yr[ed_HW_sub$Season=="late"]),lty=2)
+
 
 ed_BL_sub<-ed[complete.cases(ed[ , "BL"]),]
 ed_bl <- lm(ed_BL_sub$BL ~ ed_BL_sub$syr + ed_BL_sub$sDOY + ed_BL_sub$Ldens + ed_BL_sub$SiteShort)
+ed_bl <- lmer(ed_BL_sub$BL ~ ed_BL_sub$syr + ed_BL_sub$sDOY + ed_BL_sub$Ldens +(1 | ed_BL_sub$SiteShort))
 summary(ed_bl)
 plot(ed_BL_sub$BL ~ ed_BL_sub$yr)
 abline(lm(ed_BL_sub$BL ~ ed_BL_sub$yr))
+abline(lm(ed_BL_sub$BL[ed_BL_sub$Season=="early"] ~ ed_BL_sub$yr[ed_BL_sub$Season=="early"]),lty=2)
+abline(lm(ed_BL_sub$BL[ed_BL_sub$Season=="late"] ~ ed_BL_sub$yr[ed_BL_sub$Season=="late"]),lty=2)
 
 ####PO
 po_HW_sub<-po[complete.cases(po[, "HW"]),]
