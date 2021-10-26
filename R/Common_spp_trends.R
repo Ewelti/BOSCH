@@ -185,10 +185,6 @@ coefs <- data.frame(coef(summary(sizem)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
-plot(si$Value ~ si$spp_mm)
-plot(gam(si$Value ~ s(si$spp_mm)))
-
-
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(-0.5,0.5), xlim=c(0,6))
 title(ylab="Slope of species abundances", line=2.5,cex.lab=1.5)
 title(xlab="Species size (mm)", line=2.5,cex.lab=1.5)
