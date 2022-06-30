@@ -1,5 +1,5 @@
 ##Set working directory
-setwd("C:/Users/ewelti/Desktop/git/BOSCH/")
+setwd("C:/Users/Ellen/Desktop/aquatic_data/git/BOSCH/")
 
 # load libraries
 library(MuMIn)
@@ -27,12 +27,16 @@ head(intra)
 #fix some problem where these variables are not numeric
 intra$BL <- as.numeric(intra$Body_Length) 
 intra$HW <- as.numeric(intra$Head_Width)
+intra$BW <- as.numeric(intra$Body_Width)
+intra$BH <- as.numeric(intra$Height)
+intra$HW <- as.numeric(intra$Length.of.1st.Antennae)
 
 #log densities
 intra$dens <- as.numeric(intra$density_per_m2)
 intra$Ldens <- log10(intra$dens+1)
 
 #subset by spp
+unique(intra$SppCode)
 ed <- intra[which(intra$SppCode=="ED"), ]
 nrow(ed)
 head(ed)
@@ -40,19 +44,53 @@ po <- intra[which(intra$SppCode=="PO"), ]
 nrow(po)
 hs <- intra[which(intra$SppCode=="HS"), ]
 nrow(hs)
+ov <- intra[which(intra$SppCode=="OV"), ]
+nrow(ov)
+gr <- intra[which(intra$SppCode=="GR"), ]
+nrow(gr)
+head(gr)
+et <- intra[which(intra$SppCode=="ET"), ]
+nrow(et)
+af <- intra[which(intra$SppCode=="AF"), ]
+nrow(af)
+head(af)
+br <- intra[which(intra$SppCode=="BR"), ]
+nrow(br)
+aa <- intra[which(intra$SppCode=="AA"), ]
+nrow(aa)
+
 
 ##check response ditributions
 hist(ed$BL)
 hist(po$BL)
 hist(hs$BL)
+hist(ov$BL)
+hist(gr$BL)
+hist(et$BL)
+hist(af$BL)
+hist(br$BL)
+hist(aa$BL)
 
 hist(ed$HW)
 hist(po$HW)
 hist(hs$HW)
+hist(ov$HW)
+hist(gr$Length.of.1st.Antennae) ## different part measured
+hist(et$HW)
+hist(af$BW) ## different part measured
+hist(af$BH) ## different part measured
+hist(br$HW)
+hist(aa$HW)
 
 hist(ed$Ldens)
 hist(po$Ldens)
 hist(hs$Ldens)
+hist(ov$Ldens)
+hist(gr$Ldens)
+hist(et$Ldens)
+hist(af$Ldens)
+hist(br$Ldens)
+hist(aa$Ldens)
 #######################################
 ####################################
 #no sci notation
@@ -61,6 +99,8 @@ options(scipen = 999)
 
 ###### trying first with simple linear models #### we can discuss what models would be best 
 ####also still need to get more environmental data, e.g. at least temperature
+
+options(na.action = "na.omit")
 
 ####ED
 ed_HW_sub<-ed[complete.cases(ed[, "HW"]),]
@@ -116,7 +156,25 @@ plot(hs_BL_sub$BL ~ hs_BL_sub$yr)
 abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="early"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="early"]))
 abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="late"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="late"]))
 
+####aa
+aa_HW_sub<-aa[complete.cases(aa[, "HW"]),]
+nrow(aa_HW_sub)
+head(aa_HW_sub)
+aa_hw <- lm(aa_HW_sub$HW ~ aa_HW_sub$syr + aa_HW_sub$sDOY + aa_HW_sub$Ldens + aa_HW_sub$SiteShort + aa_HW_sub$Adult.)
+summary(aa_hw)
+plot(aa_HW_sub$HW ~ aa_HW_sub$yr)
+abline(lm(aa_HW_sub$HW[aa_HW_sub$Season=="early"] ~ aa_HW_sub$yr[aa_HW_sub$Season=="early"]))
+abline(lm(aa_HW_sub$HW[aa_HW_sub$Season=="late"] ~ aa_HW_sub$yr[aa_HW_sub$Season=="late"]))
+plot(aa_HW_sub$HW ~ aa_HW_sub$Ldens)
 
+aa_BL_sub<-aa[complete.cases(aa[ , "BL"]),]
+aa_bl <- lm(aa_BL_sub$BL ~ aa_BL_sub$syr + aa_BL_sub$sDOY + aa_BL_sub$Ldens + aa_BL_sub$SiteShort + aa_BL_sub$Adult.)
+summary(aa_bl)
+plot(aa_BL_sub$BL ~ aa_BL_sub$yr)
+plot(aa_BL_sub$BL ~ aa_BL_sub$Ldens)
+abline(lm(aa_BL_sub$BL[aa_BL_sub$Season=="early"] ~ aa_BL_sub$yr[aa_BL_sub$Season=="early"]))
+abline(lm(aa_BL_sub$BL[aa_BL_sub$Season=="late"] ~ aa_BL_sub$yr[aa_BL_sub$Season=="late"]))
+plot(aa_BL_sub$BL ~ aa_BL_sub$Ldens)
 ##########################################
 ####################################################
 
@@ -154,6 +212,17 @@ subset(dd, delta < 2)
 summary(get.models(dd, 1)[[1]])
 
 dd <- dredge(hs_bl)
+subset(dd, delta < 2)
+#'Best'model
+summary(get.models(dd, 1)[[1]])
+
+####aa
+dd <- dredge(aa_hw)
+subset(dd, delta < 2)
+#'Best'model
+summary(get.models(dd, 1)[[1]])
+
+dd <- dredge(aa_bl)
 subset(dd, delta < 2)
 #'Best'model
 summary(get.models(dd, 1)[[1]])
@@ -221,6 +290,36 @@ points(x=jitter(hs_BL_sub$yr,3), y=hs_BL_sub$BL, pch=(hs_BL_sub$SeasonCode+20),
 bg=alpha((hs_BL_sub$SiteCode),0.6),col=alpha((hs_BL_sub$SiteCode),0.6),lwd=2,cex=1.4)
 legend("topright", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
 legend("top", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
+
+####aa
+##HW
+ad<-aa_HW_sub[aa_HW_sub$Adult.=="yes",]
+ju<-aa_HW_sub[aa_HW_sub$Adult.=="no",]
+max(aa_HW_sub$HW)
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,2.4), xlim=c(1999,2020))
+title(ylab="Head width (mm)", line=2.5,cex.lab=1.5) ##title(ylab="", line=2.5,cex.lab=1.5)
+title(main="Aphelocheirus aestivalis", line=1)
+points(x=jitter(ad$yr,3), y=ad$HW, pch=(ad$SeasonCode+20), 
+       bg=alpha((ad$SiteCode),0.6),col=alpha((ad$SiteCode),0.6),lwd=2,cex=1.4)
+points(x=jitter(ju$yr,3), y=ju$HW, pch=(ju$SeasonCode+20), 
+       bg=alpha((ju$SiteCode+2),0.6),col=alpha((ju$SiteCode+2),0.6),lwd=2,cex=1.4)
+legend("topleft", legend=c("O3 adult","W1 adult","O3 juvenile","W1 juvenile"),col=c(3,4,5,6),pt.bg=c(3,4,5,6),pt.lwd=1, pch=c(24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
+legend("left", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
+
+##BL
+ad<-aa_BL_sub[aa_BL_sub$Adult.=="yes",]
+ju<-aa_BL_sub[aa_BL_sub$Adult.=="no",]
+max(aa_BL_sub$BL)
+head(aa_BL_sub)
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(1,11), xlim=c(2000,2020))
+title(ylab="Body length (mm)", line=2.5,cex.lab=1.5)
+title(main="Aphelocheirus aestivalis", line=1)
+points(x=jitter(ad$yr,3), y=ad$BL, pch=(ad$SeasonCode+20), 
+       bg=alpha((ad$SiteCode),0.6),col=alpha((ad$SiteCode),0.6),lwd=2,cex=1.4)
+points(x=jitter(ju$yr,3), y=ju$BL, pch=(ju$SeasonCode+20), 
+       bg=alpha((ju$SiteCode+2),0.6),col=alpha((ju$SiteCode+2),0.6),lwd=2,cex=1.4)
+legend("topleft", legend=c("O3 adult","W1 adult","O3 juvenile","W1 juvenile"),col=c(3,4,5,6),pt.bg=c(3,4,5,6),pt.lwd=1, pch=c(24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
+legend("left", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
 ########################################
 ###########################################################################################################################3
 
