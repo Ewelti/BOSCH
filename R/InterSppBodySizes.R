@@ -1,5 +1,5 @@
 ##Set working directory
-setwd("C:/Users/ewelti/Desktop/git/BOSCH/")
+setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 # load libraries
 library(MuMIn)
@@ -37,7 +37,7 @@ KiW1 <- inter[which(inter$site=="KiW1"), ]
 options(scipen = 999)
 
 #####model all sites
-cwm_m <- lmer(inter$CWM ~ inter$syear + inter$sDOY + (1|inter$site))
+cwm_m <- lmer(inter$CWM ~ inter$syear + poly(inter$sDOY,2) + (1|inter$site))
 summary(cwm_m)
 coefs <- data.frame(coef(summary(cwm_m)))
 # use normal distribution to approximate p-value
