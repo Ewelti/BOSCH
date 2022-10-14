@@ -1,5 +1,5 @@
 ##Set working directory
-setwd("C:/Users/ewelti/Desktop/git/BOSCH/")
+setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 ##load library
 library(data.table)
@@ -176,7 +176,17 @@ si <- merge(TTRR,sizes,by="ID_Art")
 #############################################
 ######################################
 
+########################################
+################################################
+#save data
+write.csv(si,"output_data/CommonSppTrends.csv")
+#############################################
+######################################
+
 ##all sites
+sizemsite <- lm(si$Value ~ si$spp_mm + si$site)
+summary(sizemsite)
+
 sizem <- lmer(si$Value ~ si$spp_mm + (1|si$site))
 ##sizem <- lmer(si$Value ~ poly(si$spp_mm,2) + (1|si$site))
 summary(sizem)
@@ -185,18 +195,23 @@ coefs <- data.frame(coef(summary(sizem)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
+tiff(filename = "plots/CommonSppTrends_overSize.tiff", width = 6, height = 6, units = 'in', res = 600, compression = 'lzw')
+par(mar=c(4,4,0.2,0.2))
+
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(-0.5,0.5), xlim=c(0,6))
 title(ylab="Slope of species abundances", line=2.5,cex.lab=1.5)
 title(xlab="Species size (mm)", line=2.5,cex.lab=1.5)
 polygon(x=c(-4,-4,10,10),
         y=c(-100,0,0,-100), col = "grey80", border = "grey80")
-box(lwd=2)
-points(x=si$spp_mm[si$site=="Aubach"], y=si$Value[si$site=="Aubach"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=1.4)
-points(x=si$spp_mm[si$site=="Bieber"], y=si$Value[si$site=="Bieber"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=1.4)
-points(x=si$spp_mm[si$site=="KiO3"], y=si$Value[si$site=="KiO3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=1.4)
-points(x=si$spp_mm[si$site=="KiW1"], y=si$Value[si$site=="KiW1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=1.4)
-legend("topright", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
-abline(lm(si$Value ~ si$spp_mm))
+box(lwd=3)
+points(x=si$spp_mm[si$site=="Aubach"], y=si$Value[si$site=="Aubach"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=si$spp_mm[si$site=="Bieber"], y=si$Value[si$site=="Bieber"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=si$spp_mm[si$site=="KiO3"], y=si$Value[si$site=="KiO3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=si$spp_mm[si$site=="KiW1"], y=si$Value[si$site=="KiW1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+legend("bottomright", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+abline(lm(si$Value ~ si$spp_mm), lwd=2)
+
+dev.off()
 
 #########################################
 
