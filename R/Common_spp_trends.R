@@ -22,7 +22,7 @@ scaleVars <- function(df){
 spp <- scaleVars(spp)
 head(spp)
 
-spp$Lab <- log10(spp$Abundance_per_m2+1)
+spp$Lab <- log10(spp$Abundance_per_m2)
 
 #subset by site
 Au <- spp[which(spp$site=="Auba"), ]
@@ -53,7 +53,7 @@ trends <- NULL
 for(i in unique(Au_com$ID_Art)){
   tryCatch({
     sub <- Au_com[Au_com$ID_Art == i, ]
-    trend.i <- summary(gls(Lab ~ sDOY + syr,na.action=na.omit, data = sub))$tTable[3, c(1,2,4)]
+    trend.i <- summary(gls(Lab ~ poly(sDOY,2) + syr,na.action=na.omit, data = sub))$tTable[4, c(1,2,4)]
     trend.i <- data.frame(ID_Art = i, 
                         t(trend.i))
     trends <- rbind(trends, trend.i) ; rm(trend.i, sub)
@@ -86,7 +86,7 @@ trends <- NULL
 for(i in unique(Bi_com$ID_Art)){
   tryCatch({
     sub <- Bi_com[Bi_com$ID_Art == i, ]
-    trend.i <- summary(gls(Lab ~ sDOY + syr,na.action=na.omit, data = sub))$tTable[3, c(1,2,4)]
+    trend.i <- summary(gls(Lab ~ poly(sDOY,2) + syr,na.action=na.omit, data = sub))$tTable[4, c(1,2,4)]
     trend.i <- data.frame(ID_Art = i, 
                         t(trend.i))
     trends <- rbind(trends, trend.i) ; rm(trend.i, sub)
@@ -120,7 +120,7 @@ trends <- NULL
 for(i in unique(KiO3_com$ID_Art)){
   tryCatch({
     sub <- KiO3_com[KiO3_com$ID_Art == i, ]
-    trend.i <- summary(gls(Lab ~ sDOY + syr,na.action=na.omit, data = sub))$tTable[3, c(1,2,4)]
+    trend.i <- summary(gls(Lab ~ poly(sDOY,2) + syr,na.action=na.omit, data = sub))$tTable[4, c(1,2,4)]
     trend.i <- data.frame(ID_Art = i, 
                         t(trend.i))
     trends <- rbind(trends, trend.i) ; rm(trend.i, sub)
@@ -154,7 +154,7 @@ trends <- NULL
 for(i in unique(KiW1_com$ID_Art)){
   tryCatch({
     sub <- KiW1_com[KiW1_com$ID_Art == i, ]
-    trend.i <- summary(gls(Lab ~ sDOY + syr,na.action=na.omit, data = sub))$tTable[3, c(1,2,4)]
+    trend.i <- summary(gls(Lab ~ poly(sDOY,2) + syr,na.action=na.omit, data = sub))$tTable[4, c(1,2,4)]
     trend.i <- data.frame(ID_Art = i, 
                         t(trend.i))
     trends <- rbind(trends, trend.i) ; rm(trend.i, sub)
