@@ -228,8 +228,8 @@ legend("bottom", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,34), xlim=c(2000,2020))
 title(ylab="Body length (mm)", line=2.5,cex.lab=1.5)
 title(main="Ephemera danica", line=1)
-points(x=jitter(ed_BL_sub$yr,3), y=ed_BL_sub$BL, pch=(ed_BL_sub$SeasonCode+20), 
-bg=alpha((ed_BL_sub$SiteCode),0.6),col=alpha((ed_BL_sub$SiteCode),0.6),lwd=2,cex=1.4)
+points(x=jitter(ed$yr,3), y=ed$BL, pch=(ed$SeasonCode+20), 
+bg=alpha((ed$SiteCode),0.6),col=alpha((ed$SiteCode),0.6),lwd=2,cex=1.4)
 legend("bottomleft", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
 legend("bottom", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
 
@@ -247,8 +247,8 @@ legend("top", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,20), xlim=c(2000,2020))
 title(ylab="Body length (mm)", line=2.5,cex.lab=1.5)
 title(main="Prodiamesa olivacea", line=1)
-points(x=jitter(po_BL_sub$yr,3), y=po_BL_sub$BL, pch=(po_BL_sub$SeasonCode+20), 
-bg=alpha((po_BL_sub$SiteCode),0.6),col=alpha((po_BL_sub$SiteCode),0.6),lwd=2,cex=1.4)
+points(x=jitter(po$yr,3), y=po$BL, pch=(po$SeasonCode+20), 
+bg=alpha((po$SiteCode),0.6),col=alpha((po$SiteCode),0.6),lwd=2,cex=1.4)
 legend("topleft", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
 legend("top", legend=c("early","late"), pch=c(21,22), bty="n", cex=1.5,pt.lwd=2)
 
