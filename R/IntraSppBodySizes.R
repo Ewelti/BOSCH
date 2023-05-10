@@ -1,5 +1,5 @@
 ##Set working directory
-setwd("C:/Users/Ellen/Desktop/aquatic_data/git/BOSCH/")
+setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 # load libraries
 library(MuMIn)
@@ -12,6 +12,7 @@ library(scales)
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 head(intra)
 nrow(intra)
+unique(intra$Species)
 
 ##scale everything
 #function to add a new column onto the data with scaled vars (with s before their name)
@@ -29,7 +30,7 @@ intra$BL <- as.numeric(intra$Body_Length)
 intra$HW <- as.numeric(intra$Head_Width)
 intra$BW <- as.numeric(intra$Body_Width)
 intra$BH <- as.numeric(intra$Height)
-intra$HW <- as.numeric(intra$Length.of.1st.Antennae)
+intra$LA <- as.numeric(intra$Length.of.1st.Antennae)
 
 #log densities
 intra$dens <- as.numeric(intra$density_per_m2)
@@ -101,131 +102,112 @@ options(scipen = 999)
 ####also still need to get more environmental data, e.g. at least temperature
 
 options(na.action = "na.omit")
+unique(intra$SppCode)
 
-####ED
-ed_HW_sub<-ed[complete.cases(ed[, "HW"]),]
-nrow(ed_HW_sub)
-head(ed_HW_sub)
-ed_hw <- lm(ed_HW_sub$HW ~ ed_HW_sub$syr + ed_HW_sub$sDOY + ed_HW_sub$Ldens + ed_HW_sub$SiteShort)
-ed_hw <- lmer(ed_HW_sub$HW ~ ed_HW_sub$syr + ed_HW_sub$sDOY + ed_HW_sub$Ldens +  (1 | ed_HW_sub$SiteShort)) ##error :/
-ed_hw <- gls(HW ~ syr + sDOY + Ldens + SiteShort,na.action=na.omit, data=ed_HW_sub) # did not include a yr autocorr because year is repeated- need to decide how to deal with repeated measures
-summary(ed_hw)
-plot(ed_HW_sub$HW ~ ed_HW_sub$yr)
-abline(lm(ed_HW_sub$HW ~ ed_HW_sub$yr))
-abline(lm(ed_HW_sub$HW[ed_HW_sub$Season=="early"] ~ ed_HW_sub$yr[ed_HW_sub$Season=="early"]),lty=2)
-abline(lm(ed_HW_sub$HW[ed_HW_sub$Season=="late"] ~ ed_HW_sub$yr[ed_HW_sub$Season=="late"]),lty=2)
+######################BL
 
+ests <- NULL
+for(i in unique(intra$SppCode)){
+  sub <- intra[intra$SppCode == i, ]
+	sub<-sub[complete.cases(sub[, "BL"]),]
+	sub<-sub[complete.cases(sub[, "Ldens"]),]
+	sub$SiteShort <- as.factor(sub$SiteShort)
+  	coefs <- data.frame(coef(summary(lmer(BL ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
+	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+	colnames(coefs)[1] ="Est"
+	colnames(coefs)[2] ="SE"
+	colnames(coefs)[3] ="t"
+	colnames(coefs)[4] ="p"
+	ests.i <- coefs[2:4,1:4]
+  ests.i <- data.frame(SppCode = i, t(ests.i))
+  ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
+} ; rm(i)
+ests
 
-ed_BL_sub<-ed[complete.cases(ed[ , "BL"]),]
-ed_bl <- lm(ed_BL_sub$BL ~ ed_BL_sub$syr + ed_BL_sub$sDOY + ed_BL_sub$Ldens + ed_BL_sub$SiteShort)
-ed_bl <- lmer(ed_BL_sub$BL ~ ed_BL_sub$syr + ed_BL_sub$sDOY + ed_BL_sub$Ldens +(1 | ed_BL_sub$SiteShort))
-summary(ed_bl)
-plot(ed_BL_sub$BL ~ ed_BL_sub$yr)
-abline(lm(ed_BL_sub$BL ~ ed_BL_sub$yr))
-abline(lm(ed_BL_sub$BL[ed_BL_sub$Season=="early"] ~ ed_BL_sub$yr[ed_BL_sub$Season=="early"]),lty=2)
-abline(lm(ed_BL_sub$BL[ed_BL_sub$Season=="late"] ~ ed_BL_sub$yr[ed_BL_sub$Season=="late"]),lty=2)
+write.csv(ests,"output_data/BodyLength_modeloutputs.csv")
 
-####PO
-po_HW_sub<-po[complete.cases(po[, "HW"]),]
-nrow(po_HW_sub)
-po_hw <- lm(po_HW_sub$HW ~ po_HW_sub$syr + po_HW_sub$sDOY + po_HW_sub$Ldens + po_HW_sub$SiteShort)
-summary(po_hw)
-plot(po_HW_sub$HW ~ po_HW_sub$yr)
-abline(lm(po_HW_sub$HW ~ po_HW_sub$yr))
-
-po_BL_sub<-po[complete.cases(po[ , "BL"]),]
-po_bl <- lm(po_BL_sub$BL ~ po_BL_sub$syr + po_BL_sub$sDOY + po_BL_sub$Ldens + po_BL_sub$SiteShort)
-summary(po_bl)
-plot(po_BL_sub$BL ~ po_BL_sub$yr)
-abline(lm(po_BL_sub$BL ~ po_BL_sub$yr))
-
-####hs
-hs_HW_sub<-hs[complete.cases(hs[, "HW"]),]
-nrow(hs_HW_sub)
-head(hs_HW_sub)
-hs_hw <- lm(hs_HW_sub$HW ~ hs_HW_sub$syr + hs_HW_sub$sDOY + hs_HW_sub$Ldens + hs_HW_sub$SiteShort)
-summary(hs_hw)
-plot(hs_HW_sub$HW ~ hs_HW_sub$yr)
-abline(lm(hs_HW_sub$HW[hs_HW_sub$Season=="early"] ~ hs_HW_sub$yr[hs_HW_sub$Season=="early"]))
-abline(lm(hs_HW_sub$HW[hs_HW_sub$Season=="late"] ~ hs_HW_sub$yr[hs_HW_sub$Season=="late"]))
-
-hs_BL_sub<-hs[complete.cases(hs[ , "BL"]),]
-hs_bl <- lm(hs_BL_sub$BL ~ hs_BL_sub$syr + hs_BL_sub$sDOY + hs_BL_sub$Ldens + hs_BL_sub$SiteShort)
-summary(hs_bl)
-plot(hs_BL_sub$BL ~ hs_BL_sub$yr)
-abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="early"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="early"]))
-abline(lm(hs_BL_sub$BL[hs_BL_sub$Season=="late"] ~ hs_BL_sub$yr[hs_BL_sub$Season=="late"]))
-
-####aa
-aa_HW_sub<-aa[complete.cases(aa[, "HW"]),]
-nrow(aa_HW_sub)
-head(aa_HW_sub)
-aa_hw <- lm(aa_HW_sub$HW ~ aa_HW_sub$syr + aa_HW_sub$sDOY + aa_HW_sub$Ldens + aa_HW_sub$SiteShort + aa_HW_sub$Adult.)
-summary(aa_hw)
-plot(aa_HW_sub$HW ~ aa_HW_sub$yr)
-abline(lm(aa_HW_sub$HW[aa_HW_sub$Season=="early"] ~ aa_HW_sub$yr[aa_HW_sub$Season=="early"]))
-abline(lm(aa_HW_sub$HW[aa_HW_sub$Season=="late"] ~ aa_HW_sub$yr[aa_HW_sub$Season=="late"]))
-plot(aa_HW_sub$HW ~ aa_HW_sub$Ldens)
-
-aa_BL_sub<-aa[complete.cases(aa[ , "BL"]),]
-aa_bl <- lm(aa_BL_sub$BL ~ aa_BL_sub$syr + aa_BL_sub$sDOY + aa_BL_sub$Ldens + aa_BL_sub$SiteShort + aa_BL_sub$Adult.)
-summary(aa_bl)
-plot(aa_BL_sub$BL ~ aa_BL_sub$yr)
-plot(aa_BL_sub$BL ~ aa_BL_sub$Ldens)
-abline(lm(aa_BL_sub$BL[aa_BL_sub$Season=="early"] ~ aa_BL_sub$yr[aa_BL_sub$Season=="early"]))
-abline(lm(aa_BL_sub$BL[aa_BL_sub$Season=="late"] ~ aa_BL_sub$yr[aa_BL_sub$Season=="late"]))
-plot(aa_BL_sub$BL ~ aa_BL_sub$Ldens)
 ##########################################
-####################################################
 
-####model selection
-# Example from Burnham and Anderson (2002), page 100:
-#  prevent fitting sub-models to different datasets
-options(na.action = "na.fail") ##note that if you run this line, the models above will not run anymore
+######################HW
 
-####ED
-dd <- dredge(ed_hw)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+ests <- NULL
+for(i in unique(intra$SppCode)){
+  tryCatch({
+  sub <- intra[intra$SppCode == i, ]
+	sub<-sub[complete.cases(sub[, "HW"]),]
+	sub<-sub[complete.cases(sub[, "Ldens"]),]
+	sub$SiteShort <- as.factor(sub$SiteShort)
+  	coefs <- data.frame(coef(summary(lmer(HW ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
+	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+	colnames(coefs)[1] ="Est"
+	colnames(coefs)[2] ="SE"
+	colnames(coefs)[3] ="t"
+	colnames(coefs)[4] ="p"
+	ests.i <- coefs[2:4,1:4]
+  ests.i <- data.frame(SppCode = i, t(ests.i))
+  ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
+    }, error=function(e){cat(unique(sub$SppCode),conditionMessage(e), "\n")})
+} ; rm(i)
+ests
 
-dd <- dredge(ed_bl)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+write.csv(ests,"output_data/HeadWidth_modeloutputs.csv")
 
-####PO
-dd <- dredge(po_hw)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+#######################BW
 
-dd <- dredge(po_bl)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+####AF
+BW_sub<-af[complete.cases(af[, "BW"]),]
+BW_sub<-BW_sub[complete.cases(BW_sub[, "Ldens"]),]
+BW_sub$SiteShort <- as.factor(BW_sub$SiteShort)
+af_BW <- lmer(BW_sub$BW ~ BW_sub$syr + BW_sub$sDOY + BW_sub$Ldens + (1|BW_sub$SiteShort))
+coefs <- data.frame(coef(summary(af_BW)))
+# use normal distribution to approximate p-value
+coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+colnames(coefs)[1] ="Est"
+colnames(coefs)[2] ="SE"
+colnames(coefs)[3] ="t"
+colnames(coefs)[4] ="p"
+tco <- t(coefs)
 
-####HS
-dd <- dredge(hs_hw)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+write.csv(tco,"output_data/BodyWidth_modeloutputs.csv")
 
-dd <- dredge(hs_bl)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+##########################################
 
-####aa
-dd <- dredge(aa_hw)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+######################BH
+####AF
+BH_sub<-af[complete.cases(af[, "BH"]),]
+BH_sub<-BH_sub[complete.cases(BH_sub[, "Ldens"]),]
+BH_sub$SiteShort <- as.factor(BH_sub$SiteShort)
+af_BH <- lmer(BH_sub$BH ~ BH_sub$syr + poly(BH_sub$sDOY,2) + BH_sub$Ldens + (1|BH_sub$SiteShort))
+coefs <- data.frame(coef(summary(af_BH)))
+# use normal distribution to approximate p-value
+coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+colnames(coefs)[1] ="Est"
+colnames(coefs)[2] ="SE"
+colnames(coefs)[3] ="t"
+colnames(coefs)[4] ="p"
+tco <- t(coefs)
 
-dd <- dredge(aa_bl)
-subset(dd, delta < 2)
-#'Best'model
-summary(get.models(dd, 1)[[1]])
+write.csv(tco,"output_data/BodyHeight_modeloutputs.csv")
+
+##########################################
+
+######################LA
+
+####GR
+LA_sub<-gr[complete.cases(gr[, "LA"]),]
+LA_sub<-LA_sub[complete.cases(LA_sub[, "Ldens"]),]
+LA_sub$SiteShort <- as.factor(LA_sub$SiteShort)
+gr_LA <- lmer(LA_sub$LA ~ LA_sub$syr + LA_sub$sDOY + LA_sub$Ldens + (1|LA_sub$SiteShort))
+coefs <- data.frame(coef(summary(gr_LA)))
+# use normal distribution to approximate p-value
+coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+colnames(coefs)[1] ="Est"
+colnames(coefs)[2] ="SE"
+colnames(coefs)[3] ="t"
+colnames(coefs)[4] ="p"
+tco <- t(coefs)
+
+write.csv(tco,"output_data/AntennaeLength_modeloutputs.csv")
 
 ##########################################################################################
 #############################################################################################
