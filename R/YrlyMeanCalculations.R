@@ -41,7 +41,7 @@ for (i in 1:nrow(Bio_dates_auba)) {
   missing_days <- 365 - num_entries
   
   # Calculate average temperature
-  if (missing_days < 1) {
+  if (missing_days <= 5) {
     average_temperature <- mean(filtered_data$au_gap, na.rm = T)
   } else {
     average_temperature <- NA
@@ -68,7 +68,7 @@ for (i in 1:nrow(Bio_dates_bieb)) {
   missing_days <- 365 - num_entries
   
   # Calculate average temperature
-  if (missing_days < 1) {
+  if (missing_days <= 5) {
     average_temperature <- mean(filtered_data$bieb_gap, na.rm = T)
   } else {
     average_temperature <- NA
@@ -95,7 +95,7 @@ for (i in 1:nrow(Bio_dates_o3)) {
   missing_days <- 365 - num_entries
   
   # Calculate average temperature
-  if (missing_days < 1) {
+  if (missing_days <= 5) {
     average_temperature <- mean(filtered_data$kio_gap, na.rm = T)
   } else {
     average_temperature <- NA
@@ -122,7 +122,7 @@ for (i in 1:nrow(Bio_dates_w1)) {
   missing_days <- 365 - num_entries
   
   # Calculate average temperature
-  if (missing_days < 1) {
+  if (missing_days <= 5) {
     average_temperature <- mean(filtered_data$kiw_gap, na.rm = T)
   } else {
     average_temperature <- NA
