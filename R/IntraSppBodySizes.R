@@ -36,6 +36,18 @@ intra$LA <- as.numeric(intra$Length.of.1st.Antennae)
 intra$dens <- as.numeric(intra$density_per_m2)
 intra$Ldens <- log10(intra$dens+1)
 
+#get initial summary data
+library(dplyr)
+# Summarize the data by 'Species'
+summary_intra <- intra %>%
+  group_by(Species) %>%
+  summarise(
+    count = n(),                       # Count of rows per species
+    mean_body_length = mean(Body_Length, na.rm = TRUE),     # Mean body length per species
+    mean_head_width = mean(Head_Width, na.rm = TRUE),) %>%  # Mean head width per species
+  arrange(mean_body_length)
+detach("package:dplyr", unload = TRUE)
+
 #subset by spp
 unique(intra$SppCode)
 ed <- intra[which(intra$SppCode=="ED"), ]
