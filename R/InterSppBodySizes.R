@@ -35,6 +35,7 @@ KiW1 <- inter[which(inter$site=="KiW1"), ]
 ####################################
 #no sci notation
 options(scipen = 999)
+options(na.action = "na.omit")
 
 #####model all sites
 cwm_m <- lmer(inter$CWM ~ inter$syear + poly(inter$sDOY,2) + (1|inter$site))
@@ -44,9 +45,18 @@ coefs <- data.frame(coef(summary(cwm_m)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
+sub <- inter[complete.cases(inter[, "sYryly_Temp"]),]
+cwm_m <- lm(sub$CWM ~ poly(sub$sYryly_Temp,3) + poly(sub$sDOY,2))# + sub$site)
+summary(cwm_m)
+coefs <- data.frame(coef(summary(cwm_m)))
+# use normal distribution to approximate p-value
+coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+coefs
+
 plot(inter$CWM ~ inter$year)
 abline(lm(inter$CWM ~ inter$year))
 
+plot(sub$CWM ~ sub$Yryly_Temp)
 plot(inter$Lab ~ inter$year)
 #####model Aubach
 
