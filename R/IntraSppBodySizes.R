@@ -123,13 +123,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "BL"]),]
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(BL ~ syr + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(BL ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:5,1:4]
+	ests.i <- coefs[2:4,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
 } ; rm(i)
@@ -146,13 +146,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "HW"]),]
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(HW ~ syr + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(HW ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:5,1:4]
+	ests.i <- coefs[2:4,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
     }, error=function(e){cat(unique(sub$SppCode),conditionMessage(e), "\n")})
@@ -166,7 +166,7 @@ write.csv(ests,"output_data/IntraSpp_ModelOutputs/YearModels/HeadWidth_modeloutp
 BW_sub<-af[complete.cases(af[, "BW"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "Ldens"]),]
 BW_sub$SiteShort <- as.factor(BW_sub$SiteShort)
-af_BW <- lmer(BW_sub$BW ~ BW_sub$syr + poly(BW_sub$sDOY,2) + BW_sub$Ldens + (1|BW_sub$SiteShort))
+af_BW <- lmer(BW_sub$BW ~ BW_sub$syr + BW_sub$sDOY + BW_sub$Ldens + (1|BW_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BW)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -184,7 +184,7 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/YearModels/BodyWidth_modeloutpu
 BH_sub<-af[complete.cases(af[, "BH"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "Ldens"]),]
 BH_sub$SiteShort <- as.factor(BH_sub$SiteShort)
-af_BH <- lmer(BH_sub$BH ~ BH_sub$syr + poly(BH_sub$sDOY,2) + BH_sub$Ldens + (1|BH_sub$SiteShort))
+af_BH <- lmer(BH_sub$BH ~ BH_sub$syr + BH_sub$sDOY + BH_sub$Ldens + (1|BH_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BH)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -202,7 +202,7 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/YearModels/BodyHeight_modeloutp
 LA_sub<-gr[complete.cases(gr[, "LA"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "Ldens"]),]
 LA_sub$SiteShort <- as.factor(LA_sub$SiteShort)
-gr_LA <- lmer(LA_sub$LA ~ LA_sub$syr + poly(LA_sub$sDOY,2) + LA_sub$Ldens + (1|LA_sub$SiteShort))
+gr_LA <- lmer(LA_sub$LA ~ LA_sub$syr + LA_sub$sDOY + LA_sub$Ldens + (1|LA_sub$SiteShort))
 coefs <- data.frame(coef(summary(gr_LA)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -229,13 +229,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(BL ~ sYryly_Temp + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(BL ~ sYryly_Temp + sDOY + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:5,1:4]
+	ests.i <- coefs[2:4,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
 } ; rm(i)
@@ -253,13 +253,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(HW ~ sYryly_Temp + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(HW ~ sYryly_Temp + sDOY + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:5,1:4]
+	ests.i <- coefs[2:4,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
     }, error=function(e){cat(unique(sub$SppCode),conditionMessage(e), "\n")})
@@ -274,7 +274,7 @@ BW_sub<-af[complete.cases(af[, "BW"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "Ldens"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "sYryly_Temp"]),]
 BW_sub$SiteShort <- as.factor(BW_sub$SiteShort)
-af_BW <- lmer(BW_sub$BW ~ BW_sub$sYryly_Temp + poly(BW_sub$sDOY,2) + BW_sub$Ldens + (1|BW_sub$SiteShort))
+af_BW <- lmer(BW_sub$BW ~ BW_sub$sYryly_Temp + BW_sub$sDOY + BW_sub$Ldens + (1|BW_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BW)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -292,7 +292,7 @@ BH_sub<-af[complete.cases(af[, "BH"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "Ldens"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "sYryly_Temp"]),]
 BH_sub$SiteShort <- as.factor(BH_sub$SiteShort)
-af_BH <- lmer(BH_sub$BH ~ BH_sub$sYryly_Temp + poly(BH_sub$sDOY,2) + BH_sub$Ldens + (1|BH_sub$SiteShort))
+af_BH <- lmer(BH_sub$BH ~ BH_sub$sYryly_Temp + BH_sub$sDOY + BH_sub$Ldens + (1|BH_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BH)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -310,7 +310,7 @@ LA_sub<-gr[complete.cases(gr[, "LA"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "Ldens"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "sYryly_Temp"]),]
 LA_sub$SiteShort <- as.factor(LA_sub$SiteShort)
-gr_LA <- lmer(LA_sub$LA ~ LA_sub$sYryly_Temp + poly(LA_sub$sDOY,2) + LA_sub$Ldens + (1|LA_sub$SiteShort))
+gr_LA <- lmer(LA_sub$LA ~ LA_sub$sYryly_Temp + LA_sub$sDOY + LA_sub$Ldens + (1|LA_sub$SiteShort))
 coefs <- data.frame(coef(summary(gr_LA)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -326,6 +326,113 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/TemperatureModels/AntennaeLengt
 ##################################################################
 ######################################################################
 ##############################################################################
+
+####BL YEAR plots
+#######################################
+####################################
+#no sci notation
+options(scipen = 999)
+options(na.action = "na.omit")
+
+tiff(filename = "plots/Year_BL.tiff", width = 10, height = 6, units = 'in', res = 600, compression = 'lzw')
+par(mar=c(2,4,4,0.4),mfrow=c(3,3))
+
+
+#####Aphelocheirus aestivalis
+
+head(aa)
+ad_aa <-aa[which(aa$Adult.=="yes"),]
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ad_aa$BL),max(ad_aa$BL)), xlim=c(2000,2020))
+title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="a. Aphelocheirus aestivalis adults", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=ad_aa$yr[ad_aa$SiteShort=="Auba"], y=ad_aa$BL[ad_aa$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="Bieb"], y=ad_aa$BL[ad_aa$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="O3"], y=ad_aa$BL[ad_aa$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="W1"], y=ad_aa$BL[ad_aa$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+abline(lm(ad_aa$BL ~ ad_aa$yr), lwd=4, lty=2)
+#abline(lm(ad_aa$BL[ad_aa$SiteShort=="Auba"] ~ ad_aa$yr[ad_aa$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(ad_aa$BL[ad_aa$SiteShort=="Bieb"] ~ ad_aa$yr[ad_aa$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+#abline(lm(ad_aa$BL[ad_aa$SiteShort=="O3"] ~ ad_aa$yr[ad_aa$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=1)
+#abline(lm(ad_aa$BL[ad_aa$SiteShort=="W1"] ~ ad_aa$yr[ad_aa$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=1)
+#legend("topleft", legend=c("Aubach","Bieber","KiO3","KiW1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+
+ju_aa <-aa[which(aa$Adult.=="no"),]
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ju_aa$BL),max(ju_aa$BL)), xlim=c(2000,2020))
+title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="b. Aphelocheirus aestivalis immatures", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=ju_aa$yr[ju_aa$SiteShort=="Auba"], y=ju_aa$BL[ju_aa$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="Bieb"], y=ju_aa$BL[ju_aa$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="O3"], y=ju_aa$BL[ju_aa$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="W1"], y=ju_aa$BL[ju_aa$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+abline(lm(ju_aa$BL ~ ju_aa$yr), lwd=4, lty=2)
+#abline(lm(ju_aa$BL[ju_aa$SiteShort=="Auba"] ~ ju_aa$yr[ju_aa$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(ju_aa$BL[ju_aa$SiteShort=="Bieb"] ~ ju_aa$yr[ju_aa$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+#abline(lm(ju_aa$BL[ju_aa$SiteShort=="O3"] ~ ju_aa$yr[ju_aa$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=1)
+#abline(lm(ju_aa$BL[ju_aa$SiteShort=="W1"] ~ ju_aa$yr[ju_aa$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=1)
+#legend("topleft", legend=c("Aubach","Bieber","KiO3","KiW1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+
+#####Ancylus fluviatilis
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(af$BL),max(af$BL)), xlim=c(2000,2020))
+title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="c. Ancylus fluviatilis", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=af$yr[af$SiteShort=="O3"], y=af$BL[af$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="W1"], y=af$BL[af$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="Auba"], y=af$BL[af$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="Bieb"], y=af$BL[af$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+abline(lm(af$BL ~ af$yr), lwd=4, lty=2)
+#abline(lm(af$BL[af$SiteShort=="O3"] ~ af$yr[af$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=2)
+#abline(lm(af$BL[af$SiteShort=="W1"] ~ af$yr[af$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=2)
+#abline(lm(af$BL[af$SiteShort=="Auba"] ~ af$yr[af$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(af$BL[af$SiteShort=="Bieb"] ~ af$yr[af$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+
+#####Baetis rhodani
+
+head(br)
+br_sub<-br[complete.cases(br[, "BL"]),]
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(br_sub$BL),max(br_sub$BL)), xlim=c(2000,2020))
+title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="d. Baetis rhodani", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(jitter(x=br$yr[br$SiteShort=="O3"],3), y=br$BL[br$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="W1"],3), y=br$BL[br$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="Auba"],3), y=br$BL[br$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="Bieb"],3), y=br$BL[br$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+#abline(lm(br$BL ~ br$yr), lwd=4, lty=2)
+abline(lm(br$BL[br$SiteShort=="O3"] ~ br$yr[br$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=2)
+abline(lm(br$BL[br$SiteShort=="W1"] ~ br$yr[br$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=2)
+abline(lm(br$BL[br$SiteShort=="Auba"] ~ br$yr[br$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+abline(lm(br$BL[br$SiteShort=="Bieb"] ~ br$yr[br$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+
+dev.off()
+
+##
+##
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
