@@ -183,6 +183,9 @@ write.csv(si,"output_data/CommonSppTrends.csv")
 #############################################
 ######################################
 
+##import data
+si <- read.csv("output_data/CommonSppTrends.csv", header=T)
+
 ##all sites
 sizemsite <- lm(si$Value ~ si$spp_mm + si$site)
 summary(sizemsite)
@@ -195,6 +198,10 @@ coefs <- data.frame(coef(summary(sizem)))
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
+##########################
+##PLOT
+##
+##########################
 tiff(filename = "plots/CommonSppTrends_overSize.tiff", width = 6, height = 6, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,4,0.2,0.2))
 
@@ -208,7 +215,7 @@ points(x=si$spp_mm[si$site=="Aubach"], y=si$Value[si$site=="Aubach"], pch=21, bg
 points(x=si$spp_mm[si$site=="Bieber"], y=si$Value[si$site=="Bieber"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=si$spp_mm[si$site=="KiO3"], y=si$Value[si$site=="KiO3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=si$spp_mm[si$site=="KiW1"], y=si$Value[si$site=="KiW1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-legend("bottomright", legend=c("Auba","Bieb","O3","W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+legend("bottomright", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
 abline(lm(si$Value ~ si$spp_mm), lwd=2)
 abline(lm(si$Value[si$site=="Aubach"] ~ si$spp_mm[si$site=="Aubach"]),lwd=2,col=alpha(1,0.6),lty=2)
 abline(lm(si$Value[si$site=="Bieber"] ~ si$spp_mm[si$site=="Bieber"]),lwd=2,col=alpha(2,0.6),lty=2)
