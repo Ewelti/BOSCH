@@ -1,5 +1,5 @@
 #wd for Ellen
-setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
+# setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 #Load packages
 library(tidyverse)
@@ -12,12 +12,6 @@ Yr_temps <- Yr_temps %>% select(-1)
 # Convert the Date column to the date format
 Yr_temps$Date_new <- as.Date(Yr_temps$Date_new, format = "%Y-%m-%d")
 Yr_temps$Year <- as.numeric(format(Yr_temps$Date_new, "%Y"))
-
-# Plot the graph using ggplot2
-ggplot(Yr_temps, aes(x = Date_new, y = Yryly_Temp, group = Site, color = Site)) +
-  geom_line() +
-  labs(x = "Date", y = "Temperature") +
-  theme_minimal()
 
 # Plot the graph using base plotting
 svg("plots/temperature_vs_time_updated.svg", width = 16, height = 4, pointsize = 12)
@@ -79,3 +73,39 @@ legend("bottomleft", legend = c("Aubach", "Bieber", "Kinzig 1", "Kinzig 2"),
 
 # finalise saved plot
 dev.off()
+
+# extract linear regression results
+Auba_lm <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba))
+summary(Auba_lm)
+Bieb_lm <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb))
+summary(Bieb_lm)
+O3_lm <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3))
+summary(O3_lm)
+W1_lm <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1))
+summary(W1_lm)
+
+# Calculate percentage change through time
+# Auba
+Auba <- subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba) # potentially remove NAs: & !is.na(Yryly_Temp)
+Auba_est <- as.numeric(coef(Auba_lm)["as.numeric(Date_new)"])
+Auba_ave <- mean(Auba$Yryly_Temp, na.rm = T)
+Auba_percChange_perYr <- (Auba_est/Auba_ave)*100
+print(Auba_percChange_perYr)
+# Bieb
+Bieb <- subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb) # potentially remove NAs: & !is.na(Yryly_Temp)
+Bieb_est <- as.numeric(coef(Bieb_lm)["as.numeric(Date_new)"])
+Bieb_ave <- mean(Bieb$Yryly_Temp, na.rm = T)
+Bieb_percChange_perYr <- (Bieb_est/Bieb_ave)*100
+print(Bieb_percChange_perYr)
+# O3
+O3 <- subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3) # potentially remove NAs: & !is.na(Yryly_Temp)
+O3_est <- as.numeric(coef(O3_lm)["as.numeric(Date_new)"])
+O3_ave <- mean(O3$Yryly_Temp, na.rm = T)
+O3_percChange_perYr <- (O3_est/O3_ave)*100
+print(O3_percChange_perYr)
+# W1
+W1 <- subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1) # potentially remove NAs: & !is.na(Yryly_Temp)
+W1_est <- as.numeric(coef(W1_lm)["as.numeric(Date_new)"])
+W1_ave <- mean(W1$Yryly_Temp, na.rm = T)
+W1_percChange_perYr <- (W1_est/W1_ave)*100
+print(W1_percChange_perYr)
