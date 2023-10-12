@@ -1,4 +1,4 @@
-#wd for Ellen
+# wd for Ellen
 # setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 #Load packages
@@ -86,24 +86,52 @@ summary(W1_lm)
 
 # Calculate percentage change through time
 # Auba
+## annual change in degrees C through time
+Auba <- subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba) # potentially remove NAs: & !is.na(Yryly_Temp)
+Auba_est <- as.numeric(coef(Auba_lm)["as.numeric(Date_new)"])
+Auba_ave <- mean(Auba$Yryly_Temp, na.rm = T)
+Auba_dCChange_perYr <- (Auba_est)*Auba_ave
+print(Auba_dCChange_perYr)
+## % change through time
 Auba <- subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba) # potentially remove NAs: & !is.na(Yryly_Temp)
 Auba_est <- as.numeric(coef(Auba_lm)["as.numeric(Date_new)"])
 Auba_ave <- mean(Auba$Yryly_Temp, na.rm = T)
 Auba_percChange_perYr <- (Auba_est/Auba_ave)*100
 print(Auba_percChange_perYr)
 # Bieb
+## annual change in degrees C through time
+Bieb <- subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb) # potentially remove NAs: & !is.na(Yryly_Temp)
+Bieb_est <- as.numeric(coef(Bieb_lm)["as.numeric(Date_new)"])
+Bieb_ave <- mean(Bieb$Yryly_Temp, na.rm = T)
+Bieb_dCChange_perYr <- (Bieb_est)*Bieb_ave
+print(Bieb_dCChange_perYr)
+## % change through time
 Bieb <- subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb) # potentially remove NAs: & !is.na(Yryly_Temp)
 Bieb_est <- as.numeric(coef(Bieb_lm)["as.numeric(Date_new)"])
 Bieb_ave <- mean(Bieb$Yryly_Temp, na.rm = T)
 Bieb_percChange_perYr <- (Bieb_est/Bieb_ave)*100
 print(Bieb_percChange_perYr)
 # O3
+## annual change in degrees C through time
+O3 <- subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3) # potentially remove NAs: & !is.na(Yryly_Temp)
+O3_est <- as.numeric(coef(O3_lm)["as.numeric(Date_new)"])
+O3_ave <- mean(O3$Yryly_Temp, na.rm = T)
+O3_dCChange_perYr <- (O3_est)*O3_ave
+print(O3_dCChange_perYr)
+# % change through time
 O3 <- subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3) # potentially remove NAs: & !is.na(Yryly_Temp)
 O3_est <- as.numeric(coef(O3_lm)["as.numeric(Date_new)"])
 O3_ave <- mean(O3$Yryly_Temp, na.rm = T)
 O3_percChange_perYr <- (O3_est/O3_ave)*100
 print(O3_percChange_perYr)
 # W1
+## annual change in degrees C through time
+W1 <- subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1) # potentially remove NAs: & !is.na(Yryly_Temp)
+W1_est <- as.numeric(coef(W1_lm)["as.numeric(Date_new)"])
+W1_ave <- mean(W1$Yryly_Temp, na.rm = T)
+W1_dCChange_perYr <- (W1_est)*W1_ave
+print(W1_dCChange_perYr)
+## % change through time
 W1 <- subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1) # potentially remove NAs: & !is.na(Yryly_Temp)
 W1_est <- as.numeric(coef(W1_lm)["as.numeric(Date_new)"])
 W1_ave <- mean(W1$Yryly_Temp, na.rm = T)
