@@ -56,8 +56,13 @@ clip(x1=15180, x2=18082, y1 = -0, y2 = 100)
 # abline(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1)), col = "orange", lwd = 1, lty = 2)
 ablineclip(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba)), lwd = 1, col = alpha(1, 0.6), lty = 2)
 abline(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb)), lwd = 1, col = alpha(2, 0.6), lty = 2)
-abline(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3)), lwd = 1, col = alpha(3, 0.6), lty = 2)
+abline(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3)), lwd = 1, col = alpha(3, 0.6), lty = 1)
 abline(lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1)), lwd = 1, col = alpha(4, 0.6), lty = 2)
+
+# summary(auba <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Auba" & Date_new >= min_year_Auba)))
+# summary(Bieb <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "Bieb" & Date_new >= min_year_Bieb)))
+# summary(O3 <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "O3" & Date_new >= min_year_O3)))
+# summary(W1 <- lm(Yryly_Temp ~ as.numeric(Date_new), data = subset(Yr_temps, Site == "W1" & Date_new >= min_year_W1)))
 
 # Format x-axis as years
 axis.Date(1, at = seq(min(Yr_temps$Date_new), max(Yr_temps$Date_new), by = "year"), format = "%Y", las = 2)
