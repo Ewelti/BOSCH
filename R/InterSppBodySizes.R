@@ -58,6 +58,7 @@ abline(lm(inter$CWM ~ inter$year))
 
 plot(sub$CWM ~ sub$Yryly_Temp)
 plot(inter$Lab ~ inter$year)
+
 #####model Aubach
 
 cwm_m <- lm(Au$CWM ~ Au$syear + Au$sDOY)
@@ -71,6 +72,7 @@ plot(Au$CWM ~ Au$year)
 abline(lm(Au$CWM ~ Au$year))
 
 plot(Au$Lab ~ Au$year)
+
 #####model Bieber
 cwm_m <- lm(Bi$CWM ~ Bi$syear + Bi$sDOY)
 summary(cwm_m)
@@ -83,6 +85,7 @@ plot(Bi$CWM ~ Bi$year)
 abline(lm(Bi$CWM ~ Bi$year))
 
 plot(Bi$Lab ~ Bi$year)
+
 #####model KiO3
 cwm_m <- lm(KiO3$CWM ~ KiO3$syear + KiO3$sDOY)
 summary(cwm_m)
@@ -95,8 +98,9 @@ plot(KiO3$CWM ~ KiO3$year)
 abline(lm(KiO3$CWM ~ KiO3$year))
 
 plot(KiO3$Lab ~ KiO3$year)
+
 #####model KiW1
-cwm_m <- lmer(KiW1$CWM ~ KiW1$syear + KiW1$sDOY)
+cwm_m <- lm(KiW1$CWM ~ KiW1$syear + KiW1$sDOY)
 summary(cwm_m)
 coefs <- data.frame(coef(summary(cwm_m)))
 # use normal distribution to approximate p-value

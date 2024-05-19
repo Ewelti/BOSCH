@@ -18,6 +18,7 @@ tiff(filename = "plots/CWM_overYrandTemp.tiff", width = 10, height = 6, units = 
 par(mar=c(4,4,0.2,0.4),mfrow=c(1,2))
 
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0.5,3), xlim=c(2000,2020))
+legend(legend="a","topright", bty="n",cex=2)
 title(ylab="CWM of body size (mm)", line=2.5,cex.lab=1.5)
 title(xlab="Sampling year", line=2.5,cex.lab=1.5)
 box(lwd=3)
@@ -30,9 +31,10 @@ points(x=inter$year[inter$site=="KiW1"], y=inter$CWM[inter$site=="KiW1"], pch=24
 abline(lm(inter$CWM[inter$site=="Auba"] ~ inter$year[inter$site=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
 abline(lm(inter$CWM[inter$site=="Bieb"] ~ inter$year[inter$site=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
 abline(lm(inter$CWM[inter$site=="KiO3"] ~ inter$year[inter$site=="KiO3"]),lwd=2,col=alpha(3,0.6),lty=2)
-abline(lm(inter$CWM[inter$site=="KiW1"] ~ inter$year[inter$site=="KiW1"]),lwd=2,col=alpha(4,0.6),lty=2)
+abline(lm(inter$CWM[inter$site=="KiW1"] ~ inter$year[inter$site=="KiW1"]),lwd=2,col=alpha(4,0.6),lty=1)
 
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0.5,3), xlim=c(8.7,12.5))
+legend(legend="b","topright", bty="n",cex=2)
 #title(ylab="CWM of body size (mm)", line=2.5,cex.lab=1.5)
 title(xlab="Mean temperature (\u00B0C) of prior 12 mo", line=2.5,cex.lab=1.5)
 box(lwd=3)
@@ -44,7 +46,7 @@ y1 <- sub$CWM
 fit <- lm(y1 ~ poly(x1,3))
 summary(fit)
 newx <- seq(min(x1), max(x1), length.out=53)
-preds <- predict(mod, newdata = data.frame(x1=newx), interval = 'confidence')
+preds <- predict(fit, newdata = data.frame(x1=newx), interval = 'confidence')
 # add fill
 polygon(c(rev(newx), newx), c(rev(preds[ ,3]), preds[ ,2]), col ="grey80", border = NA) #col = 'grey80'
 # intervals
