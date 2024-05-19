@@ -1,0 +1,13 @@
+Species,Measured part,Parameter,Year,DOY (linear),DOY (2nd polynomial),Density
+Ancylus fluviatilis,body width,Est,0.149,-0.308,-2.624,-0.073
+,body width,SE,0.094,0.926,0.960,0.216
+,body width,t,1.590,-0.333,-2.735,-0.338
+,body width,p,0.112,0.739,0.006,0.735
+,body height,Est,0.164,-0.652,-2.172,-0.183
+,body height,SE,0.062,0.648,0.665,0.138
+,body height,t,2.661,-1.007,-3.266,-1.322
+,body height,p,0.008,0.314,0.001,0.186
+Gammarus roeselii,antennae length,Est,0.546,-7.030,-10.176,-0.050
+,antennae length,SE,0.860,5.811,5.923,1.301
+,antennae length,t,0.635,-1.210,-1.718,-0.038
+,antennae length,p,0.525,0.226,0.086,0.970

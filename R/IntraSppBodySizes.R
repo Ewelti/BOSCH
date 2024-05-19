@@ -123,13 +123,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "BL"]),]
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(BL ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(BL ~ syr + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:4,1:4]
+	ests.i <- coefs[2:5,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
 } ; rm(i)
@@ -146,13 +146,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "HW"]),]
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(HW ~ syr + sDOY + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(HW ~ syr + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:4,1:4]
+	ests.i <- coefs[2:5,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
     }, error=function(e){cat(unique(sub$SppCode),conditionMessage(e), "\n")})
@@ -166,7 +166,7 @@ write.csv(ests,"output_data/IntraSpp_ModelOutputs/YearModels/HeadWidth_modeloutp
 BW_sub<-af[complete.cases(af[, "BW"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "Ldens"]),]
 BW_sub$SiteShort <- as.factor(BW_sub$SiteShort)
-af_BW <- lmer(BW_sub$BW ~ BW_sub$syr + BW_sub$sDOY + BW_sub$Ldens + (1|BW_sub$SiteShort))
+af_BW <- lmer(BW_sub$BW ~ BW_sub$syr + poly(BW_sub$sDOY,2) + BW_sub$Ldens + (1|BW_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BW)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -184,7 +184,7 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/YearModels/BodyWidth_modeloutpu
 BH_sub<-af[complete.cases(af[, "BH"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "Ldens"]),]
 BH_sub$SiteShort <- as.factor(BH_sub$SiteShort)
-af_BH <- lmer(BH_sub$BH ~ BH_sub$syr + BH_sub$sDOY + BH_sub$Ldens + (1|BH_sub$SiteShort))
+af_BH <- lmer(BH_sub$BH ~ BH_sub$syr + poly(BH_sub$sDOY,2) + BH_sub$Ldens + (1|BH_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BH)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -202,7 +202,7 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/YearModels/BodyHeight_modeloutp
 LA_sub<-gr[complete.cases(gr[, "LA"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "Ldens"]),]
 LA_sub$SiteShort <- as.factor(LA_sub$SiteShort)
-gr_LA <- lmer(LA_sub$LA ~ LA_sub$syr + LA_sub$sDOY + LA_sub$Ldens + (1|LA_sub$SiteShort))
+gr_LA <- lmer(LA_sub$LA ~ LA_sub$syr + poly(LA_sub$sDOY,2) + LA_sub$Ldens + (1|LA_sub$SiteShort))
 coefs <- data.frame(coef(summary(gr_LA)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -229,13 +229,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(BL ~ sYryly_Temp + sDOY + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(BL ~ sYryly_Temp + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:4,1:4]
+	ests.i <- coefs[2:5,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
 } ; rm(i)
@@ -253,13 +253,13 @@ for(i in unique(intra$SppCode)){
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
 	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
 	sub$SiteShort <- as.factor(sub$SiteShort)
-  	coefs <- data.frame(coef(summary(lmer(HW ~ sYryly_Temp + sDOY + Ldens + (1|SiteShort), data = sub))))
+  	coefs <- data.frame(coef(summary(lmer(HW ~ sYryly_Temp + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
 	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 	colnames(coefs)[1] ="Est"
 	colnames(coefs)[2] ="SE"
 	colnames(coefs)[3] ="t"
 	colnames(coefs)[4] ="p"
-	ests.i <- coefs[2:4,1:4]
+	ests.i <- coefs[2:5,1:4]
   ests.i <- data.frame(SppCode = i, t(ests.i))
   ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
     }, error=function(e){cat(unique(sub$SppCode),conditionMessage(e), "\n")})
@@ -274,7 +274,7 @@ BW_sub<-af[complete.cases(af[, "BW"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "Ldens"]),]
 BW_sub<-BW_sub[complete.cases(BW_sub[, "sYryly_Temp"]),]
 BW_sub$SiteShort <- as.factor(BW_sub$SiteShort)
-af_BW <- lmer(BW_sub$BW ~ BW_sub$sYryly_Temp + BW_sub$sDOY + BW_sub$Ldens + (1|BW_sub$SiteShort))
+af_BW <- lmer(BW_sub$BW ~ BW_sub$sYryly_Temp + poly(BW_sub$sDOY,2) + BW_sub$Ldens + (1|BW_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BW)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -292,7 +292,7 @@ BH_sub<-af[complete.cases(af[, "BH"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "Ldens"]),]
 BH_sub<-BH_sub[complete.cases(BH_sub[, "sYryly_Temp"]),]
 BH_sub$SiteShort <- as.factor(BH_sub$SiteShort)
-af_BH <- lmer(BH_sub$BH ~ BH_sub$sYryly_Temp + BH_sub$sDOY + BH_sub$Ldens + (1|BH_sub$SiteShort))
+af_BH <- lmer(BH_sub$BH ~ BH_sub$sYryly_Temp + poly(BH_sub$sDOY,2) + BH_sub$Ldens + (1|BH_sub$SiteShort))
 coefs <- data.frame(coef(summary(af_BH)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
@@ -310,7 +310,7 @@ LA_sub<-gr[complete.cases(gr[, "LA"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "Ldens"]),]
 LA_sub<-LA_sub[complete.cases(LA_sub[, "sYryly_Temp"]),]
 LA_sub$SiteShort <- as.factor(LA_sub$SiteShort)
-gr_LA <- lmer(LA_sub$LA ~ LA_sub$sYryly_Temp + LA_sub$sDOY + LA_sub$Ldens + (1|LA_sub$SiteShort))
+gr_LA <- lmer(LA_sub$LA ~ LA_sub$sYryly_Temp + poly(LA_sub$sDOY,2) + LA_sub$Ldens + (1|LA_sub$SiteShort))
 coefs <- data.frame(coef(summary(gr_LA)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
