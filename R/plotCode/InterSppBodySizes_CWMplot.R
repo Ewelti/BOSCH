@@ -52,7 +52,7 @@ polygon(c(rev(newx), newx), c(rev(preds[ ,3]), preds[ ,2]), col ="grey80", borde
 # intervals
 lines(newx, preds[ ,3], lty = 'dashed', col = 1)
 lines(newx, preds[ ,2], lty = 'dashed', col = 1)
-predicted.intervals <- predict(mod,data.frame(x=x1),interval='confidence', level=0.99)
+predicted.intervals <- predict(fit, data.frame(x=x1),interval='confidence', level=0.99)
 ix <- sort(x1, index.return=T)$ix
 pred <- predict(fit)
 lines(x1[ix], pred[ix], col=1, lwd=2)

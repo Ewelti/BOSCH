@@ -7,6 +7,9 @@ library(scales)
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 
+# function for adding silhouettes
+source("R/Add_silhouette_function.R")
+
 head(intra)
 nrow(intra)
 unique(intra$Species)
@@ -91,7 +94,7 @@ br <- els[which(els$spp=="BR"), ]
 aa <- els[which(els$spp=="AA"), ]
 
 ##plot
-tiff(filename = "plots/Temp_BL.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Temp_BL.tiff_wSilhouettes.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(3,3))
 
 #####Aphelocheirus aestivalis
@@ -108,6 +111,13 @@ polygon(c(aa$temp[aa$site=="O3"],rev(aa$temp[aa$site=="O3"])), c(aa$l95[aa$site=
 points(x=aa$temp[aa$site=="O3"], y=aa$mean[aa$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(aa$temp[aa$site=="W1"],rev(aa$temp[aa$site=="W1"])), c(aa$l95[aa$site=="W1"],rev(aa$u95[aa$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=aa$temp[aa$site=="W1"], y=aa$mean[aa$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 10.5,
+  y = 4.9,
+  width = 0.25,
+  height = NULL
+)
 title("a. Aphelocheirus aestivalis",bty="n",cex.main=1.5)
 
 ###############Ancylus fluviatilis
@@ -123,6 +133,13 @@ polygon(c(af$temp[af$site=="O3"],rev(af$temp[af$site=="O3"])), c(af$l95[af$site=
 points(x=af$temp[af$site=="O3"], y=af$mean[af$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(af$temp[af$site=="W1"],rev(af$temp[af$site=="W1"])), c(af$l95[af$site=="W1"],rev(af$u95[af$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 9,
+  y = 7.5,
+  width = 0.5,
+  height = NULL
+)
 title(main="b. Ancylus fluviatilis",bty="n",cex.main=1.5)
 
 ###############Baetis rhodani
@@ -138,6 +155,13 @@ polygon(c(br$temp[br$site=="O3"],rev(br$temp[br$site=="O3"])), c(br$l95[br$site=
 points(x=br$temp[br$site=="O3"], y=br$mean[br$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(br$temp[br$site=="W1"],rev(br$temp[br$site=="W1"])), c(br$l95[br$site=="W1"],rev(br$u95[br$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=br$temp[br$site=="W1"], y=br$mean[br$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/baetis_rhodani.svg",
+  x = 11.5,
+  y = 5,
+  width = 0.75,
+  height = NULL
+)
 title(main="c. Baetis rhodani",bty="n",cex.main=1.5)
 legend("topleft", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.lwd=1,lty=1,lwd=2,bty="n")
            
@@ -154,6 +178,13 @@ polygon(c(et$temp[et$site=="O3"],rev(et$temp[et$site=="O3"])), c(et$l95[et$site=
 points(x=et$temp[et$site=="O3"], y=et$mean[et$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(et$temp[et$site=="W1"],rev(et$temp[et$site=="W1"])), c(et$l95[et$site=="W1"],rev(et$u95[et$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=et$temp[et$site=="W1"], y=et$mean[et$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/eiseniella_tetraedra.svg",
+  x = 9.65,
+  y = 22,
+  width = 0.2,
+  height = NULL
+)
 title(main="d. Eiseniella tetraedra",bty="n",cex.main=1.5)
 
 ###############Ephemera danica
@@ -169,6 +200,13 @@ polygon(c(ed$temp[ed$site=="O3"],rev(ed$temp[ed$site=="O3"])), c(ed$l95[ed$site=
 points(x=ed$temp[ed$site=="O3"], y=ed$mean[ed$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(ed$temp[ed$site=="W1"],rev(ed$temp[ed$site=="W1"])), c(ed$l95[ed$site=="W1"],rev(ed$u95[ed$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=ed$temp[ed$site=="W1"], y=ed$mean[ed$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/Ephemera_danica.svg",
+  x = 9,
+  y = 9,
+  width = 0.75,
+  height = NULL
+)
 title(main="e. Ephemera danica ",bty="n",cex.main=1.5)
  
 ###############Gammarus roeselii
@@ -184,6 +222,13 @@ polygon(c(gr$temp[gr$site=="O3"],rev(gr$temp[gr$site=="O3"])), c(gr$l95[gr$site=
 points(x=gr$temp[gr$site=="O3"], y=gr$mean[gr$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(gr$temp[gr$site=="W1"],rev(gr$temp[gr$site=="W1"])), c(gr$l95[gr$site=="W1"],rev(gr$u95[gr$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=gr$temp[gr$site=="W1"], y=gr$mean[gr$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/Gammarus_roselii.svg",
+  x = 10.5,
+  y = 10.25,
+  width = 0.35,
+  height = NULL
+)
 title(main="f. Gammarus roeselii",bty="n",cex.main=1.5)
  
 ###############Hydropsyche siltalai
@@ -199,6 +244,13 @@ polygon(c(hs$temp[hs$site=="O3"],rev(hs$temp[hs$site=="O3"])), c(hs$l95[hs$site=
 points(x=hs$temp[hs$site=="O3"], y=hs$mean[hs$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(hs$temp[hs$site=="W1"],rev(hs$temp[hs$site=="W1"])), c(hs$l95[hs$site=="W1"],rev(hs$u95[hs$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=hs$temp[hs$site=="W1"], y=hs$mean[hs$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/hydropsyche_siltalai.svg",
+  x = 9.1,
+  y = 11,
+  width = 0.75,
+  height = NULL
+)
 title(main="g. Hydropsyche siltalai",bty="n",cex.main=1.5)
  
 ###############Orectochilus villosus
@@ -214,6 +266,13 @@ polygon(c(ov$temp[ov$site=="O3"],rev(ov$temp[ov$site=="O3"])), c(ov$l95[ov$site=
 points(x=ov$temp[ov$site=="O3"], y=ov$mean[ov$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(ov$temp[ov$site=="W1"],rev(ov$temp[ov$site=="W1"])), c(ov$l95[ov$site=="W1"],rev(ov$u95[ov$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=ov$temp[ov$site=="W1"], y=ov$mean[ov$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/Orectochilus_villosus.svg",
+  x = 9,
+  y = 2.5,
+  width = 0.4,
+  height = NULL
+)
 title(main="h. Orectochilus villosus",bty="n",cex.main=1.5)
  
 ###############Prodiamesa olivacea
@@ -229,6 +288,13 @@ polygon(c(po$temp[po$site=="O3"],rev(po$temp[po$site=="O3"])), c(po$l95[po$site=
 points(x=po$temp[po$site=="O3"], y=po$mean[po$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(po$temp[po$site=="W1"],rev(po$temp[po$site=="W1"])), c(po$l95[po$site=="W1"],rev(po$u95[po$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=po$temp[po$site=="W1"], y=po$mean[po$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
+  x = 9.1,
+  y = 12.5,
+  width = 0.6,
+  height = NULL
+)
 title(main="i. Prodiamesa olivacea ",bty="n",cex.main=1.5)
 
 ##

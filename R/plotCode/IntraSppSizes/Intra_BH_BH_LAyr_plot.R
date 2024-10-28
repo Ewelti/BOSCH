@@ -5,6 +5,9 @@ setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 library(scales)
 library(stringr)
 
+# function for adding silhouettes
+source("R/Add_silhouette_function.R")
+
 # attach data
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 head(intra)
@@ -110,7 +113,7 @@ options(scipen = 999)
 options(na.action = "na.omit")
 
 ##Other measurements plot##
-tiff(filename = "plots/Year_BH_BW_LA.tiff", width = 8, height = 8, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Year_BH_BW_LA_wSilhouette.tiff", width = 8, height = 8, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(2.5,5,4,0.5),mfrow=c(2,2))
 
 
@@ -132,6 +135,13 @@ arrows(ests_s$yr[ests_s$site=="Auba"]-0.15, ests_s$BW_est[ests_s$site=="Auba"]-e
 arrows(ests_s$yr[ests_s$site=="Bieb"]-0.05, ests_s$BW_est[ests_s$site=="Bieb"]-ests_s$BW_SE[ests_s$site=="Bieb"], ests_s$yr[ests_s$site=="Bieb"]-0.05, ests_s$BW_est[ests_s$site=="Bieb"]+ests_s$BW_SE[ests_s$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_s$yr[ests_s$site=="O3"]+0.05, ests_s$BW_est[ests_s$site=="O3"]-ests_s$BW_SE[ests_s$site=="O3"], ests_s$yr[ests_s$site=="O3"]+0.05, ests_s$BW_est[ests_s$site=="O3"]+ests_s$BW_SE[ests_s$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_s$yr[ests_s$site=="W1"]+0.15, ests_s$BW_est[ests_s$site=="W1"]-ests_s$BW_SE[ests_s$site=="W1"], ests_s$yr[ests_s$site=="W1"]+0.15, ests_s$BW_est[ests_s$site=="W1"]+ests_s$BW_SE[ests_s$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 2005,
+  y = 1.75,
+  width = 2.5,
+  height = NULL
+)
 title(main="a. Ancylus fluviatilis",bty="n",cex.main=2)
 
 ###############Ancylus fluviatilis
@@ -152,6 +162,13 @@ arrows(ests_bh$yr[ests_bh$site=="Auba"]-0.15, ests_bh$BH_est[ests_bh$site=="Auba
 arrows(ests_bh$yr[ests_bh$site=="Bieb"]-0.05, ests_bh$BH_est[ests_bh$site=="Bieb"]-ests_bh$BH_SE[ests_bh$site=="Bieb"], ests_bh$yr[ests_bh$site=="Bieb"]-0.05, ests_bh$BH_est[ests_bh$site=="Bieb"]+ests_bh$BH_SE[ests_bh$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_bh$yr[ests_bh$site=="O3"]+0.05, ests_bh$BH_est[ests_bh$site=="O3"]-ests_bh$BH_SE[ests_bh$site=="O3"], ests_bh$yr[ests_bh$site=="O3"]+0.05, ests_bh$BH_est[ests_bh$site=="O3"]+ests_bh$BH_SE[ests_bh$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_bh$yr[ests_bh$site=="W1"]+0.15, ests_bh$BH_est[ests_bh$site=="W1"]-ests_bh$BH_SE[ests_bh$site=="W1"], ests_bh$yr[ests_bh$site=="W1"]+0.15, ests_bh$BH_est[ests_bh$site=="W1"]+ests_bh$BH_SE[ests_bh$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 2005,
+  y = 0.625,
+  width = 2.5,
+  height = NULL
+)
 title(main="b. Ancylus fluviatilis",bty="n",cex.main=2)
 
 ###############Gammarus roeselii
@@ -172,6 +189,13 @@ arrows(ests_la$yr[ests_la$site=="Auba"]-0.15, ests_la$LA_est[ests_la$site=="Auba
 arrows(ests_la$yr[ests_la$site=="Bieb"]-0.05, ests_la$LA_est[ests_la$site=="Bieb"]-ests_la$LA_SE[ests_la$site=="Bieb"], ests_la$yr[ests_la$site=="Bieb"]-0.05, ests_la$LA_est[ests_la$site=="Bieb"]+ests_la$LA_SE[ests_la$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_la$yr[ests_la$site=="O3"]+0.05, ests_la$LA_est[ests_la$site=="O3"]-ests_la$LA_SE[ests_la$site=="O3"], ests_la$yr[ests_la$site=="O3"]+0.05, ests_la$LA_est[ests_la$site=="O3"]+ests_la$LA_SE[ests_la$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ests_la$yr[ests_la$site=="W1"]+0.15, ests_la$LA_est[ests_la$site=="W1"]-ests_la$LA_SE[ests_la$site=="W1"], ests_la$yr[ests_la$site=="W1"]+0.15, ests_la$LA_est[ests_la$site=="W1"]+ests_la$LA_SE[ests_la$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/Gammarus_roselii.svg",
+  x = 2002,
+  y = 2.5,
+  width = 3,
+  height = NULL
+)
 title(main="c. Gammarus roeselii",bty="n",cex.main=2)
 
 plot(1, 1,type= "n",bty ="n",axes=F,frame.plot=F, xaxt='n', ann=FALSE, yaxt='n')

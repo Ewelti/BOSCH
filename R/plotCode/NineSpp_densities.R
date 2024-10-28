@@ -5,6 +5,9 @@ setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 library(scales)
 library(stringr)
 
+# function for adding silhouettes
+source("R/Add_silhouette_function.R")
+
 # attach data
 intra <- read.csv("RawData/NineSppDensities.csv", header=T)
 head(intra)
@@ -66,7 +69,7 @@ options(scipen = 999)
 options(na.action = "na.omit")
 
 ##Density plot##
-tiff(filename = "plots/Year_Dens.tiff", width = 12, height = 12, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Year_Dens_wSilhouette.tiff", width = 12, height = 12, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(2.5,5,4,0.5),mfrow=c(3,3))
 
 
@@ -84,6 +87,13 @@ points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$Dens_est[aa$site=="Auba"], type="l", 
 points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$Dens_est[aa$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$Dens_est[aa$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$Dens_est[aa$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 2002.5,
+  y = min(aa$Dens_est) * 7.5,
+  width = 2.5,
+  height = NULL
+)
 title("a. Aphelocheirus aestivalis",bty="n",cex.main=2)
 
 ###############Ancylus fluviatilis
@@ -100,6 +110,13 @@ points(x=af$yr[af$site=="Auba"]-0.15, y=af$Dens_est[af$site=="Auba"], type="l", 
 points(x=af$yr[af$site=="Bieb"]-0.05, y=af$Dens_est[af$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=af$yr[af$site=="O3"]+0.05, y=af$Dens_est[af$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=af$yr[af$site=="W1"]+0.15, y=af$Dens_est[af$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 2002.5,
+  y = min(af$Dens_est) * 63.5,
+  width = 2.5,
+  height = NULL
+)
 title(main="b. Ancylus fluviatilis",bty="n",cex.main=2)
  
 ###############Baetis rhodani  
@@ -116,6 +133,13 @@ points(x=br$yr[br$site=="Auba"]-0.15, y=br$Dens_est[br$site=="Auba"], type="l", 
 points(x=br$yr[br$site=="Bieb"]-0.05, y=br$Dens_est[br$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=br$yr[br$site=="O3"]+0.05, y=br$Dens_est[br$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=br$yr[br$site=="W1"]+0.15, y=br$Dens_est[br$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/baetis_rhodani.svg",
+  x = 2002.5,
+  y = min(br$Dens_est) * 150,
+  width = 4,
+  height = NULL
+)
 title(main="c. Baetis rhodani",bty="n",cex.main=2)
             
 ###############Eiseniella tetraedra 
@@ -132,6 +156,13 @@ points(x=et$yr[et$site=="Auba"]-0.15, y=et$Dens_est[et$site=="Auba"], type="l", 
 points(x=et$yr[et$site=="Bieb"]-0.05, y=et$Dens_est[et$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=et$yr[et$site=="O3"]+0.05, y=et$Dens_est[et$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=et$yr[et$site=="W1"]+0.15, y=et$Dens_est[et$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/eiseniella_tetraedra.svg",
+  x = 2002.5,
+  y = min(et$Dens_est) *3,
+  width = 3,
+  height = NULL
+)
 title(main="d. Eiseniella tetraedra",bty="n",cex.main=2)
 legend("topleft", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2, cex=1.5)
 
@@ -149,6 +180,13 @@ points(x=ed$yr[ed$site=="Auba"]-0.15, y=ed$Dens_est[ed$site=="Auba"], type="l", 
 points(x=ed$yr[ed$site=="Bieb"]-0.05, y=ed$Dens_est[ed$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=ed$yr[ed$site=="O3"]+0.05, y=ed$Dens_est[ed$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=ed$yr[ed$site=="W1"]+0.15, y=ed$Dens_est[ed$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/Ephemera_danica.svg",
+  x = 2002.5,
+  y = min(ed$Dens_est) + 140,
+  width = 3.5,
+  height = NULL
+)
 title(main="e. Ephemera danica ",bty="n",cex.main=2)
  
 ###############Gammarus roeselii
@@ -165,6 +203,13 @@ points(x=gr$yr[gr$site=="Auba"]-0.15, y=gr$Dens_est[gr$site=="Auba"], type="l", 
 points(x=gr$yr[gr$site=="Bieb"]-0.05, y=gr$Dens_est[gr$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=gr$yr[gr$site=="O3"]+0.05, y=gr$Dens_est[gr$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=gr$yr[gr$site=="W1"]+0.15, y=gr$Dens_est[gr$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/Gammarus_roselii.svg",
+  x = 2002,
+  y = min(gr$Dens_est) * 30,
+  width = 3.5,
+  height = NULL
+)
 title(main="f. Gammarus roeselii",bty="n",cex.main=2)
  
 ###############Hydropsyche siltalai 
@@ -181,6 +226,13 @@ points(x=hs$yr[hs$site=="Auba"]-0.15, y=hs$Dens_est[hs$site=="Auba"], type="l", 
 points(x=hs$yr[hs$site=="Bieb"]-0.05, y=hs$Dens_est[hs$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=hs$yr[hs$site=="O3"]+0.05, y=hs$Dens_est[hs$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=hs$yr[hs$site=="W1"]+0.15, y=hs$Dens_est[hs$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/hydropsyche_siltalai.svg",
+  x = 2015.5,
+  y = min(hs$Dens_est) * 320,
+  width = 5,
+  height = NULL
+)
 title(main="g. Hydropsyche siltalai",bty="n",cex.main=2)
  
 ###############Orectochilus villosus
@@ -197,6 +249,13 @@ points(x=ov$yr[ov$site=="Auba"]-0.15, y=ov$Dens_est[ov$site=="Auba"], type="l", 
 points(x=ov$yr[ov$site=="Bieb"]-0.05, y=ov$Dens_est[ov$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=ov$yr[ov$site=="O3"]+0.05, y=ov$Dens_est[ov$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=ov$yr[ov$site=="W1"]+0.15, y=ov$Dens_est[ov$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/Orectochilus_villosus.svg",
+  x = 2017.5,
+  y = min(ov$Dens_est) + 29,
+  width = 2.25,
+  height = NULL
+)
 title(main="h. Orectochilus villosus",bty="n",cex.main=2)
  
 ###############Prodiamesa olivacea  
@@ -213,6 +272,13 @@ points(x=po$yr[po$site=="Auba"]-0.15, y=po$Dens_est[po$site=="Auba"], type="l", 
 points(x=po$yr[po$site=="Bieb"]-0.05, y=po$Dens_est[po$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
 points(x=po$yr[po$site=="O3"]+0.05, y=po$Dens_est[po$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
 points(x=po$yr[po$site=="W1"]+0.15, y=po$Dens_est[po$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
+  x = 2017.5,
+  y = min(po$Dens_est) + 350,
+  width = 4,
+  height = NULL
+)
 title(main="i. Prodiamesa olivacea ",bty="n",cex.main=2)
 
 dev.off()

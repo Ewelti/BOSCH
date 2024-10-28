@@ -5,6 +5,9 @@ setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 library(scales)
 library(stringr)
 
+# function for adding silhouettes
+source("R/Add_silhouette_function.R")
+
 # attach data
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 head(intra)
@@ -86,9 +89,8 @@ options(scipen = 999)
 options(na.action = "na.omit")
 
 ##HW plot##
-tiff(filename = "plots/Year_HW.tiff", width = 8, height = 10, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Year_HW_wSilhouette.tiff", width = 8, height = 10, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(2.5,5,4,0.5),mfrow=c(4,2))
-
 
 #####Aphelocheirus aestivalis
 
@@ -108,6 +110,13 @@ arrows(aa$yr[aa$site=="Auba"]-0.15, aa$HW_est[aa$site=="Auba"]-aa$HW_SE[aa$site=
 arrows(aa$yr[aa$site=="Bieb"]-0.05, aa$HW_est[aa$site=="Bieb"]-aa$HW_SE[aa$site=="Bieb"], aa$yr[aa$site=="Bieb"]-0.05, aa$HW_est[aa$site=="Bieb"]+aa$HW_SE[aa$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(aa$yr[aa$site=="O3"]+0.05, aa$HW_est[aa$site=="O3"]-aa$HW_SE[aa$site=="O3"], aa$yr[aa$site=="O3"]+0.05, aa$HW_est[aa$site=="O3"]+aa$HW_SE[aa$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(aa$yr[aa$site=="W1"]+0.15, aa$HW_est[aa$site=="W1"]-aa$HW_SE[aa$site=="W1"], aa$yr[aa$site=="W1"]+0.15, aa$HW_est[aa$site=="W1"]+aa$HW_SE[aa$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 2001,
+  y = 1,
+  width = 1.5,
+  height = NULL
+)
 title("a. Aphelocheirus aestivalis",bty="n",cex.main=2)
  
 ###############Baetis rhodani  
@@ -128,6 +137,13 @@ arrows(br$yr[br$site=="Auba"]-0.15, br$HW_est[br$site=="Auba"]-br$HW_SE[br$site=
 arrows(br$yr[br$site=="Bieb"]-0.05, br$HW_est[br$site=="Bieb"]-br$HW_SE[br$site=="Bieb"], br$yr[br$site=="Bieb"]-0.05, br$HW_est[br$site=="Bieb"]+br$HW_SE[br$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(br$yr[br$site=="O3"]+0.05, br$HW_est[br$site=="O3"]-br$HW_SE[br$site=="O3"], br$yr[br$site=="O3"]+0.05, br$HW_est[br$site=="O3"]+br$HW_SE[br$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(br$yr[br$site=="W1"]+0.15, br$HW_est[br$site=="W1"]-br$HW_SE[br$site=="W1"], br$yr[br$site=="W1"]+0.15, br$HW_est[br$site=="W1"]+br$HW_SE[br$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/baetis_rhodani.svg",
+  x = 2001,
+  y = 1.3,
+  width = 2.75,
+  height = NULL
+)
 title(main="b. Baetis rhodani",bty="n",cex.main=2)
             
 ###############Eiseniella tetraedra 
@@ -148,6 +164,13 @@ arrows(et$yr[et$site=="Auba"]-0.15, et$HW_est[et$site=="Auba"]-et$HW_SE[et$site=
 arrows(et$yr[et$site=="Bieb"]-0.05, et$HW_est[et$site=="Bieb"]-et$HW_SE[et$site=="Bieb"], et$yr[et$site=="Bieb"]-0.05, et$HW_est[et$site=="Bieb"]+et$HW_SE[et$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(et$yr[et$site=="O3"]+0.05, et$HW_est[et$site=="O3"]-et$HW_SE[et$site=="O3"], et$yr[et$site=="O3"]+0.05, et$HW_est[et$site=="O3"]+et$HW_SE[et$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(et$yr[et$site=="W1"]+0.15, et$HW_est[et$site=="W1"]-et$HW_SE[et$site=="W1"], et$yr[et$site=="W1"]+0.15, et$HW_est[et$site=="W1"]+et$HW_SE[et$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/eiseniella_tetraedra.svg",
+  x = 2001,
+  y = 1,
+  width = 2.5,
+  height = NULL
+)
 title(main="c. Eiseniella tetraedra",bty="n",cex.main=2)
 
 ###############Ephemera danica 
@@ -168,6 +191,13 @@ arrows(ed$yr[ed$site=="Auba"]-0.15, ed$HW_est[ed$site=="Auba"]-ed$HW_SE[ed$site=
 arrows(ed$yr[ed$site=="Bieb"]-0.05, ed$HW_est[ed$site=="Bieb"]-ed$HW_SE[ed$site=="Bieb"], ed$yr[ed$site=="Bieb"]-0.05, ed$HW_est[ed$site=="Bieb"]+ed$HW_SE[ed$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ed$yr[ed$site=="O3"]+0.05, ed$HW_est[ed$site=="O3"]-ed$HW_SE[ed$site=="O3"], ed$yr[ed$site=="O3"]+0.05, ed$HW_est[ed$site=="O3"]+ed$HW_SE[ed$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ed$yr[ed$site=="W1"]+0.15, ed$HW_est[ed$site=="W1"]-ed$HW_SE[ed$site=="W1"], ed$yr[ed$site=="W1"]+0.15, ed$HW_est[ed$site=="W1"]+ed$HW_SE[ed$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/Ephemera_danica.svg",
+  x = 2001,
+  y = 0.6,
+  width = 2.5,
+  height = NULL
+)
 title(main="d. Ephemera danica ",bty="n",cex.main=2)
  
 ###############Hydropsyche siltalai 
@@ -188,6 +218,13 @@ arrows(hs$yr[hs$site=="Auba"]-0.15, hs$HW_est[hs$site=="Auba"]-hs$HW_SE[hs$site=
 arrows(hs$yr[hs$site=="Bieb"]-0.05, hs$HW_est[hs$site=="Bieb"]-hs$HW_SE[hs$site=="Bieb"], hs$yr[hs$site=="Bieb"]-0.05, hs$HW_est[hs$site=="Bieb"]+hs$HW_SE[hs$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(hs$yr[hs$site=="O3"]+0.05, hs$HW_est[hs$site=="O3"]-hs$HW_SE[hs$site=="O3"], hs$yr[hs$site=="O3"]+0.05, hs$HW_est[hs$site=="O3"]+hs$HW_SE[hs$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(hs$yr[hs$site=="W1"]+0.15, hs$HW_est[hs$site=="W1"]-hs$HW_SE[hs$site=="W1"], hs$yr[hs$site=="W1"]+0.15, hs$HW_est[hs$site=="W1"]+hs$HW_SE[hs$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/hydropsyche_siltalai.svg",
+  x = 2001,
+  y = 0.6,
+  width = 3,
+  height = NULL
+)
 title(main="e. Hydropsyche siltalai",bty="n",cex.main=2)
  
 ###############Orectochilus villosus
@@ -208,6 +245,13 @@ arrows(ov$yr[ov$site=="Auba"]-0.15, ov$HW_est[ov$site=="Auba"]-ov$HW_SE[ov$site=
 arrows(ov$yr[ov$site=="Bieb"]-0.05, ov$HW_est[ov$site=="Bieb"]-ov$HW_SE[ov$site=="Bieb"], ov$yr[ov$site=="Bieb"]-0.05, ov$HW_est[ov$site=="Bieb"]+ov$HW_SE[ov$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ov$yr[ov$site=="O3"]+0.05, ov$HW_est[ov$site=="O3"]-ov$HW_SE[ov$site=="O3"], ov$yr[ov$site=="O3"]+0.05, ov$HW_est[ov$site=="O3"]+ov$HW_SE[ov$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(ov$yr[ov$site=="W1"]+0.15, ov$HW_est[ov$site=="W1"]-ov$HW_SE[ov$site=="W1"], ov$yr[ov$site=="W1"]+0.15, ov$HW_est[ov$site=="W1"]+ov$HW_SE[ov$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/Orectochilus_villosus.svg",
+  x = 2001,
+  y = 1.75,
+  width = 1.5,
+  height = NULL
+)
 title(main="f. Orectochilus villosus",bty="n",cex.main=2)
  
 ###############Prodiamesa olivacea  
@@ -228,6 +272,13 @@ arrows(po$yr[po$site=="Auba"]-0.15, po$HW_est[po$site=="Auba"]-po$HW_SE[po$site=
 arrows(po$yr[po$site=="Bieb"]-0.05, po$HW_est[po$site=="Bieb"]-po$HW_SE[po$site=="Bieb"], po$yr[po$site=="Bieb"]-0.05, po$HW_est[po$site=="Bieb"]+po$HW_SE[po$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(po$yr[po$site=="O3"]+0.05, po$HW_est[po$site=="O3"]-po$HW_SE[po$site=="O3"], po$yr[po$site=="O3"]+0.05, po$HW_est[po$site=="O3"]+po$HW_SE[po$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
 arrows(po$yr[po$site=="W1"]+0.15, po$HW_est[po$site=="W1"]-po$HW_SE[po$site=="W1"], po$yr[po$site=="W1"]+0.15, po$HW_est[po$site=="W1"]+po$HW_SE[po$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
+  x = 2001,
+  y = 0.25,
+  width = 2.5,
+  height = NULL
+)
 title(main="g. Prodiamesa olivacea ",bty="n",cex.main=2)
 
 plot(1, 1,type= "n",bty ="n",axes=F,frame.plot=F, xaxt='n', ann=FALSE, yaxt='n')

@@ -7,6 +7,9 @@ library(scales)
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 
+# function for adding silhouettes
+source("R/Add_silhouette_function.R")
+
 head(intra)
 nrow(intra)
 unique(intra$Species)
@@ -84,7 +87,7 @@ gr <- els[which(els$spp=="GR"), ]
 af <- els[which(els$spp=="AF"), ]
 
 ##plot
-tiff(filename = "plots/Temp_BW_BH_LA.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Temp_BW_BH_LA_wSilhouette.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(2,2))
 
 ###############Ancylus fluviatilis
@@ -100,6 +103,13 @@ polygon(c(af$temp[af$site=="O3"],rev(af$temp[af$site=="O3"])), c(af$l95[af$site=
 points(x=af$temp[af$site=="O3"], y=af$mean[af$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(af$temp[af$site=="W1"],rev(af$temp[af$site=="W1"])), c(af$l95[af$site=="W1"],rev(af$u95[af$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 12,
+  y = 6.5,
+  width = 0.5,
+  height = NULL
+)
 title(main="a. Ancylus fluviatilis",bty="n",cex.main=1.5)
 
 ########calculate BH estimates for a given Temp (marginal effects) for each spp and site
@@ -160,6 +170,13 @@ polygon(c(af$temp[af$site=="O3"],rev(af$temp[af$site=="O3"])), c(af$l95[af$site=
 points(x=af$temp[af$site=="O3"], y=af$mean[af$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(af$temp[af$site=="W1"],rev(af$temp[af$site=="W1"])), c(af$l95[af$site=="W1"],rev(af$u95[af$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/ancylus_fluviatilis.svg",
+  x = 12,
+  y = 3.5,
+  width = 0.5,
+  height = NULL
+)
 title(main="b. Ancylus fluviatilis",bty="n",cex.main=1.5)
 
 ########calculate LA estimates for a given Temp (marginal effects) for each spp and site
@@ -220,6 +237,13 @@ polygon(c(gr$temp[gr$site=="O3"],rev(gr$temp[gr$site=="O3"])), c(gr$l95[gr$site=
 points(x=gr$temp[gr$site=="O3"], y=gr$mean[gr$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
 polygon(c(gr$temp[gr$site=="W1"],rev(gr$temp[gr$site=="W1"])), c(gr$l95[gr$site=="W1"],rev(gr$u95[gr$site=="W1"])),col=alpha(4,0.4),border=NA)
 points(x=gr$temp[gr$site=="W1"], y=gr$mean[gr$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/Gammarus_roselii.svg",
+  x = 12,
+  y = 1.5,
+  width = 0.4,
+  height = NULL
+)
 title(main="c. Gammarus roeselii",bty="n",cex.main=1.5)
 
 ##
