@@ -1,9 +1,12 @@
 #
-#install.packages("effects")
+#
+#install.packages("rphylopic")
 library(effects)
 library(stringr)
 library(tidyr)
 library(scales)
+#install.packages("remotes")
+#remotes::install_github("palaeoverse/rphylopic")
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 intra <- read.csv("RawData/IntraSppBS.csv", header=T)
 
