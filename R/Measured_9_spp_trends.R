@@ -68,7 +68,7 @@ for(i in unique(spp$spp_site)){
   sub <- spp[spp$spp_site == i, ]
 	#sub<-sub[complete.cases(sub[, "Lab"]),]
     trend.i <- summary(gls(Lab ~ poly(sDOY,2) + syr,na.action=na.omit, data = sub))$tTable[4, c(1,2,4)]
-    trend.i <- data.frame(taxa = i, 
+    trend.i <- data.frame(spp_site = i, 
                         t(trend.i))
     trends <- rbind(trends, trend.i) ; rm(trend.i, sub)
     }, error=function(e){cat(unique(sub$taxa),conditionMessage(e), "\n")})
