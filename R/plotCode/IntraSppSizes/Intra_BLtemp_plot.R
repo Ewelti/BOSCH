@@ -97,32 +97,9 @@ aa <- els[which(els$spp=="AA"), ]
 tiff(filename = "plots/Temp_BL.tiff_wSilhouettes.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(3,3))
 
-#####Aphelocheirus aestivalis
-
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$l95),max(aa$u95)), xlim=c(min(aa$temp),max(aa$temp)))
-title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
-#title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
-box(lwd=3)
-polygon(c(aa$temp[aa$site=="Auba"],rev(aa$temp[aa$site=="Auba"])), c(aa$l95[aa$site=="Auba"],rev(aa$u95[aa$site=="Auba"])),col=alpha(1,0.4),border=NA)
-points(x=aa$temp[aa$site=="Auba"], y=aa$mean[aa$site=="Auba"],type="l",col=alpha(1,0.6),lwd=2)
-polygon(c(aa$temp[aa$site=="Bieb"],rev(aa$temp[aa$site=="Bieb"])), c(aa$l95[aa$site=="Bieb"],rev(aa$u95[aa$site=="Bieb"])),col=alpha(2,0.4),border=NA)
-points(x=aa$temp[aa$site=="Bieb"], y=aa$mean[aa$site=="Bieb"],type="l",col=alpha(2,0.6),lwd=2)
-polygon(c(aa$temp[aa$site=="O3"],rev(aa$temp[aa$site=="O3"])), c(aa$l95[aa$site=="O3"],rev(aa$u95[aa$site=="O3"])),col=alpha(3,0.4),border=NA)
-points(x=aa$temp[aa$site=="O3"], y=aa$mean[aa$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
-polygon(c(aa$temp[aa$site=="W1"],rev(aa$temp[aa$site=="W1"])), c(aa$l95[aa$site=="W1"],rev(aa$u95[aa$site=="W1"])),col=alpha(4,0.4),border=NA)
-points(x=aa$temp[aa$site=="W1"], y=aa$mean[aa$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
-add_silhouette(
-  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
-  x = 10.5,
-  y = 4.9,
-  width = 0.25,
-  height = NULL
-)
-title("a. Aphelocheirus aestivalis",bty="n",cex.main=1.5)
-
 ###############Ancylus fluviatilis
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(af$l95),max(af$u95)), xlim=c(min(af$temp),max(af$temp)))
-#title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
 polygon(c(af$temp[af$site=="Auba"],rev(af$temp[af$site=="Auba"])), c(af$l95[af$site=="Auba"],rev(af$u95[af$site=="Auba"])),col=alpha(1,0.4),border=NA)
@@ -140,7 +117,29 @@ add_silhouette(
   width = 0.5,
   height = NULL
 )
-title(main="b. Ancylus fluviatilis",bty="n",cex.main=1.5)
+title(main="a. Ancylus fluviatilis",bty="n",cex.main=1.5)
+
+#####Aphelocheirus aestivalis
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$l95),max(aa$u95)), xlim=c(min(aa$temp),max(aa$temp)))
+#title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
+box(lwd=3)
+polygon(c(aa$temp[aa$site=="Auba"],rev(aa$temp[aa$site=="Auba"])), c(aa$l95[aa$site=="Auba"],rev(aa$u95[aa$site=="Auba"])),col=alpha(1,0.4),border=NA)
+points(x=aa$temp[aa$site=="Auba"], y=aa$mean[aa$site=="Auba"],type="l",col=alpha(1,0.6),lwd=2)
+polygon(c(aa$temp[aa$site=="Bieb"],rev(aa$temp[aa$site=="Bieb"])), c(aa$l95[aa$site=="Bieb"],rev(aa$u95[aa$site=="Bieb"])),col=alpha(2,0.4),border=NA)
+points(x=aa$temp[aa$site=="Bieb"], y=aa$mean[aa$site=="Bieb"],type="l",col=alpha(2,0.6),lwd=2)
+polygon(c(aa$temp[aa$site=="O3"],rev(aa$temp[aa$site=="O3"])), c(aa$l95[aa$site=="O3"],rev(aa$u95[aa$site=="O3"])),col=alpha(3,0.4),border=NA)
+points(x=aa$temp[aa$site=="O3"], y=aa$mean[aa$site=="O3"],type="l",col=alpha(3,0.6),lwd=2)
+polygon(c(aa$temp[aa$site=="W1"],rev(aa$temp[aa$site=="W1"])), c(aa$l95[aa$site=="W1"],rev(aa$u95[aa$site=="W1"])),col=alpha(4,0.4),border=NA)
+points(x=aa$temp[aa$site=="W1"], y=aa$mean[aa$site=="W1"],type="l",col=alpha(4,0.6),lwd=2)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 10.5,
+  y = 4.9,
+  width = 0.25,
+  height = NULL
+)
+title("b. Aphelocheirus aestivalis",bty="n",cex.main=1.5)
 
 ###############Baetis rhodani
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(br$l95),max(br$u95)), xlim=c(min(br$temp),max(br$temp)))

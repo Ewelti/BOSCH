@@ -103,31 +103,6 @@ par(mar=c(0.4,0.4,0.4,0.4))
 plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
 
 par(mar=c(2,2.5,2.5,0.4))
-#####Aphelocheirus aestivalis
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$BL_est-aa$BL_SE-1),max(aa$BL_est + aa$BL_SE+1)), xlim=c(2000,2020))
-#title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
-#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
-box(lwd=3)
-points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$BL_est[aa$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$BL_est[aa$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$BL_est[aa$site=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$BL_est[aa$site=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$BL_est[aa$site=="Auba"], type="l", bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$BL_est[aa$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$BL_est[aa$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$BL_est[aa$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-arrows(aa$yr[aa$site=="Auba"]-0.15, aa$BL_est[aa$site=="Auba"]-aa$BL_SE[aa$site=="Auba"], aa$yr[aa$site=="Auba"]-0.15, aa$BL_est[aa$site=="Auba"]+aa$BL_SE[aa$site=="Auba"],col=alpha(1,0.6),lwd=2,length=0.05, angle=90, code=3)
-arrows(aa$yr[aa$site=="Bieb"]-0.05, aa$BL_est[aa$site=="Bieb"]-aa$BL_SE[aa$site=="Bieb"], aa$yr[aa$site=="Bieb"]-0.05, aa$BL_est[aa$site=="Bieb"]+aa$BL_SE[aa$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
-arrows(aa$yr[aa$site=="O3"]+0.05, aa$BL_est[aa$site=="O3"]-aa$BL_SE[aa$site=="O3"], aa$yr[aa$site=="O3"]+0.05, aa$BL_est[aa$site=="O3"]+aa$BL_SE[aa$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
-arrows(aa$yr[aa$site=="W1"]+0.15, aa$BL_est[aa$site=="W1"]-aa$BL_SE[aa$site=="W1"], aa$yr[aa$site=="W1"]+0.15, aa$BL_est[aa$site=="W1"]+aa$BL_SE[aa$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
-add_silhouette(
-  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
-  x = 2002,
-  y = min(aa$BL_est - aa$BL_SE - 1) + 1.1,
-  width = 2.5,
-  height = NULL
-)
-title("a. Aphelocheirus aestivalis",bty="n",cex.main=2)
 
 ###############Ancylus fluviatilis
 af[is.na(af)] <- 0
@@ -154,7 +129,33 @@ add_silhouette(
   width = 2.5,
   height = NULL
 )
-title(main="b. Ancylus fluviatilis",bty="n",cex.main=2)
+title(main="a. Ancylus fluviatilis",bty="n",cex.main=2)
+
+#####Aphelocheirus aestivalis
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$BL_est-aa$BL_SE-1),max(aa$BL_est + aa$BL_SE+1)), xlim=c(2000,2020))
+#title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+box(lwd=3)
+points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$BL_est[aa$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$BL_est[aa$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$BL_est[aa$site=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$BL_est[aa$site=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$BL_est[aa$site=="Auba"], type="l", bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$BL_est[aa$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$BL_est[aa$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$BL_est[aa$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+arrows(aa$yr[aa$site=="Auba"]-0.15, aa$BL_est[aa$site=="Auba"]-aa$BL_SE[aa$site=="Auba"], aa$yr[aa$site=="Auba"]-0.15, aa$BL_est[aa$site=="Auba"]+aa$BL_SE[aa$site=="Auba"],col=alpha(1,0.6),lwd=2,length=0.05, angle=90, code=3)
+arrows(aa$yr[aa$site=="Bieb"]-0.05, aa$BL_est[aa$site=="Bieb"]-aa$BL_SE[aa$site=="Bieb"], aa$yr[aa$site=="Bieb"]-0.05, aa$BL_est[aa$site=="Bieb"]+aa$BL_SE[aa$site=="Bieb"],col=alpha(2,0.6),lwd=2,length=0.05, angle=90, code=3)
+arrows(aa$yr[aa$site=="O3"]+0.05, aa$BL_est[aa$site=="O3"]-aa$BL_SE[aa$site=="O3"], aa$yr[aa$site=="O3"]+0.05, aa$BL_est[aa$site=="O3"]+aa$BL_SE[aa$site=="O3"],col=alpha(3,0.6),lwd=2,length=0.05, angle=90, code=3)
+arrows(aa$yr[aa$site=="W1"]+0.15, aa$BL_est[aa$site=="W1"]-aa$BL_SE[aa$site=="W1"], aa$yr[aa$site=="W1"]+0.15, aa$BL_est[aa$site=="W1"]+aa$BL_SE[aa$site=="W1"],col=alpha(4,0.6),lwd=2,length=0.05, angle=90, code=3)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 2002,
+  y = min(aa$BL_est - aa$BL_SE - 1) + 1.1,
+  width = 2.5,
+  height = NULL
+)
+title("b. Aphelocheirus aestivalis",bty="n",cex.main=2)
 
 ###############Baetis rhodani  
 br[is.na(br)] <- 0

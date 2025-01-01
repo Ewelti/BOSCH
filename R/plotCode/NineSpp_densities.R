@@ -77,33 +77,11 @@ my_lay <- layout(mat = layout_mat,
                  heights = c(2,2,2,0.3),
                  widths = c(0.3,2,2,2),respect = TRUE)      
 layout.show(16)
-par(mar=c(2,2.5,2.5,0.4))
 
 #empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
 plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
-
-#####Aphelocheirus aestivalis
-
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$Dens_est),max(aa$Dens_est)), xlim=c(2000,2020))
-#title(ylab="Density (XX)", line=2.7,cex.lab=1.5)
-#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
-box(lwd=3)
-points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$Dens_est[aa$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$Dens_est[aa$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$Dens_est[aa$site=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$Dens_est[aa$site=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$Dens_est[aa$site=="Auba"], type="l", bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$Dens_est[aa$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$Dens_est[aa$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
-points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$Dens_est[aa$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-add_silhouette(
-  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
-  x = 2002.5,
-  y = min(aa$Dens_est) * 7.5,
-  width = 2.5,
-  height = NULL
-)
-title("a. Aphelocheirus aestivalis",bty="n",cex.main=2)
+par(mar=c(2,2.5,2.5,0.4))
 
 ###############Ancylus fluviatilis
 af[is.na(af)] <- 0
@@ -126,7 +104,30 @@ add_silhouette(
   width = 2.5,
   height = NULL
 )
-title(main="b. Ancylus fluviatilis",bty="n",cex.main=2)
+title(main="a. Ancylus fluviatilis",bty="n",cex.main=2)
+
+#####Aphelocheirus aestivalis
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$Dens_est),max(aa$Dens_est)), xlim=c(2000,2020))
+#title(ylab="Density (XX)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+box(lwd=3)
+points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$Dens_est[aa$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$Dens_est[aa$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$Dens_est[aa$site=="O3"], pch=23, bg=alpha(3,0.7),col=alpha(3,0.7),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$Dens_est[aa$site=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Auba"]-0.15, y=aa$Dens_est[aa$site=="Auba"], type="l", bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="Bieb"]-0.05, y=aa$Dens_est[aa$site=="Bieb"], type="l", bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="O3"]+0.05, y=aa$Dens_est[aa$site=="O3"], type="l", bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=aa$yr[aa$site=="W1"]+0.15, y=aa$Dens_est[aa$site=="W1"], type="l", bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+add_silhouette(
+  upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
+  x = 2002.5,
+  y = min(aa$Dens_est) * 7.5,
+  width = 2.5,
+  height = NULL
+)
+title("b. Aphelocheirus aestivalis",bty="n",cex.main=2)
  
 ###############Baetis rhodani  
 br[is.na(br)] <- 0
