@@ -206,7 +206,7 @@ tiff(filename = "plots/CommonSppTrends_overSize.tiff", width = 6, height = 6, un
 par(mar=c(4,4,0.2,0.2))
 
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(-0.5,0.5), xlim=c(0,6))
-title(ylab="Slope of species abundances", line=2.5,cex.lab=1.5)
+title(ylab="Change in species abundances over time", line=2.5,cex.lab=1.5)
 title(xlab="Species size (mm)", line=2.5,cex.lab=1.5)
 polygon(x=c(-4,-4,10,10),
         y=c(-100,0,0,-100), col = "grey80", border = "grey80")
