@@ -70,8 +70,17 @@ options(na.action = "na.omit")
 
 ##Density plot##
 tiff(filename = "plots/Year_Dens_wSilhouette.tiff", width = 12, height = 12, units = 'in', res = 600, compression = 'lzw')
-par(mar=c(2.5,5,4,0.5),mfrow=c(3,3))
 
+##layout
+layout_mat <- matrix(c(1:16), nrow = 4, ncol = 4, byrow = TRUE)
+my_lay <- layout(mat = layout_mat, 
+                 heights = c(2,2,2,0.3),
+                 widths = c(0.3,2,2,2),respect = TRUE)      
+layout.show(16)
+par(mar=c(2,2.5,2.5,0.4))
+
+#empty plot for where the labels will go
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
 
 #####Aphelocheirus aestivalis
 
@@ -141,11 +150,14 @@ add_silhouette(
   height = NULL
 )
 title(main="c. Baetis rhodani",bty="n",cex.main=2)
-            
+
+#empty plot for where the labels will go
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+title(ylab=parse(text='Density/m^2'), line=-2,cex.lab=2)
+         
 ###############Eiseniella tetraedra 
 et[is.na(et)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(et$Dens_est),max(et$Dens_est)), xlim=c(2000,2020))
-title(ylab=parse(text='Density/m^2'), line=2.7,cex.lab=2)
 #title(xlab="Sampling year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=et$yr[et$site=="Auba"]-0.15, y=et$Dens_est[et$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
@@ -211,7 +223,10 @@ add_silhouette(
   height = NULL
 )
 title(main="f. Gammarus roeselii",bty="n",cex.main=2)
- 
+
+#empty plot for where the labels will go
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+
 ###############Hydropsyche siltalai 
 hs[is.na(hs)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(hs$Dens_est),max(hs$Dens_est)), xlim=c(2000,2020))
@@ -280,7 +295,16 @@ add_silhouette(
   height = NULL
 )
 title(main="i. Prodiamesa olivacea ",bty="n",cex.main=2)
+title(xlab="Year", line=2.7,cex.lab=2)
 
+#empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+title(xlab="Year", line=-2,cex.lab=2)
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+ 
 dev.off()
 ##
 ##

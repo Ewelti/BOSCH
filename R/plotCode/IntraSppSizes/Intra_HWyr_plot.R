@@ -89,8 +89,8 @@ options(scipen = 999)
 options(na.action = "na.omit")
 
 ##HW plot##
-tiff(filename = "plots/Year_HW_wSilhouette.tiff", width = 8, height = 10, units = 'in', res = 600, compression = 'lzw')
-par(mar=c(2.5,5,4,0.5),mfrow=c(4,2))
+tiff(filename = "plots/Year_HW_wSilhouette.tiff", width = 8, height = 12, units = 'in', res = 600, compression = 'lzw')
+par(mar=c(3.6,5,4,0.5),mfrow=c(4,2))
 
 #####Aphelocheirus aestivalis
 
@@ -231,7 +231,7 @@ title(main="e. Hydropsyche siltalai",bty="n",cex.main=2)
 ov[is.na(ov)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ov$HW_est-ov$HW_SE-.1),max(ov$HW_est + ov$HW_SE+.1)), xlim=c(2000,2020))
 #title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
-#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(xlab="Year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=ov$yr[ov$site=="Auba"]-0.15, y=ov$HW_est[ov$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
 points(x=ov$yr[ov$site=="Bieb"]-0.05, y=ov$HW_est[ov$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
@@ -258,7 +258,7 @@ title(main="f. Orectochilus villosus",bty="n",cex.main=2)
 po[is.na(po)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(po$HW_est-po$HW_SE-.1),max(po$HW_est + po$HW_SE+.1)), xlim=c(2000,2020))
 title(ylab="Head width (mm)", line=2.7,cex.lab=1.5)
-#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(xlab="Year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=po$yr[po$site=="Auba"]-0.15, y=po$HW_est[po$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
 points(x=po$yr[po$site=="Bieb"]-0.05, y=po$HW_est[po$site=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)

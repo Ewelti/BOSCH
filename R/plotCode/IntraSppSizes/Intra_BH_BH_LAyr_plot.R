@@ -114,7 +114,7 @@ options(na.action = "na.omit")
 
 ##Other measurements plot##
 tiff(filename = "plots/Year_BH_BW_LA_wSilhouette.tiff", width = 8, height = 8, units = 'in', res = 600, compression = 'lzw')
-par(mar=c(2.5,5,4,0.5),mfrow=c(2,2))
+par(mar=c(3.6,5,4,0.5),mfrow=c(2,2))
 
 
 ###############Ancylus fluviatilis
@@ -148,6 +148,7 @@ title(main="a. Ancylus fluviatilis",bty="n",cex.main=2)
 ests_bh[is.na(ests_bh)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ests_bh$BH_est-ests_bh$BH_SE-0.3),max(ests_bh$BH_est + ests_bh$BH_SE+0.3)), xlim=c(2000,2020))
 title(ylab="Body height (mm)", line=2.7,cex.lab=1.5)
+title(xlab="Year", line=2.5,cex.lab=1.5)
 #title(xlab="Sampling year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=ests_bh$yr[ests_bh$site=="Auba"]-0.15, y=ests_bh$BH_est[ests_bh$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
@@ -175,6 +176,7 @@ title(main="b. Ancylus fluviatilis",bty="n",cex.main=2)
 ests_la[is.na(ests_la)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ests_la$LA_est-ests_la$LA_SE-1),max(ests_la$LA_est + ests_la$LA_SE+1)), xlim=c(2000,2020))
 title(ylab="Antennae length (mm)", line=2.7,cex.lab=1.5)
+title(xlab="Year", line=2.5,cex.lab=1.5)
 #title(xlab="Sampling year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=ests_la$yr[ests_la$site=="Auba"]-0.15, y=ests_la$LA_est[ests_la$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)

@@ -91,8 +91,18 @@ options(na.action = "na.omit")
 
 ##BL plot##
 tiff(filename = "plots/Year_BL_wSilhouettes.tiff", width = 12, height = 12, units = 'in', res = 600, compression = 'lzw')
-par(mar=c(2.5,5,4,0.5),mfrow=c(3,3))
 
+##layout
+layout_mat <- matrix(c(1:16), nrow = 4, ncol = 4, byrow = TRUE)
+my_lay <- layout(mat = layout_mat, 
+                 heights = c(2,2,2,0.3),
+                 widths = c(0.3,2,2,2),respect = TRUE)      
+
+#empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+
+par(mar=c(2,2.5,2.5,0.4))
 #####Aphelocheirus aestivalis
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(aa$BL_est-aa$BL_SE-1),max(aa$BL_est + aa$BL_SE+1)), xlim=c(2000,2020))
 #title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
@@ -172,11 +182,16 @@ add_silhouette(
   height = NULL
 )
 title(main="c. Baetis rhodani",bty="n",cex.main=2)
-            
+
+#empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+title(ylab="Body length (mm)", line=-2,cex.lab=2)
+par(mar=c(2,2.5,2.5,0.4))
+    
 ###############Eiseniella tetraedra 
 et[is.na(et)] <- 0
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(et$BL_est-et$BL_SE-1),max(et$BL_est + et$BL_SE+1)), xlim=c(2000,2020))
-title(ylab="Body length (mm)", line=2.7,cex.lab=2)
 #title(xlab="Sampling year", line=2.5,cex.lab=1.5)
 box(lwd=3)
 points(x=et$yr[et$site=="Auba"]-0.15, y=et$BL_est[et$site=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
@@ -254,6 +269,11 @@ add_silhouette(
   height = NULL
 )
 title(main="f. Gammarus roeselii",bty="n",cex.main=2)
+
+#empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+par(mar=c(2,2.5,2.5,0.4))
 
 ###############Hydropsyche siltalai 
 hs[is.na(hs)] <- 0
@@ -335,6 +355,16 @@ add_silhouette(
   height = NULL
 )
 title(main="i. Prodiamesa olivacea ",bty="n",cex.main=2)
+
+#empty plot for where the labels will go
+par(mar=c(0.4,0.4,0.4,0.4))
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+title(xlab="Year", line=-2,cex.lab=2)
+plot(0, xaxt = 'n', yaxt = 'n', bty = 'n', pch = '', ylab = '', xlab = '')
+ 
+
 dev.off()
 ##
 ##
