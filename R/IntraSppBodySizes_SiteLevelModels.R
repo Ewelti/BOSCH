@@ -126,7 +126,7 @@ ests[c('spp','site')] <- str_split_fixed(ests$spp_site, ' ', 2)
 ests_s = subset(ests, select = -c(spp_site))
 head(ests_s)
 
-write.csv(est_s,"output_data/IntraSpp_ModelOutputs/SiteLevel/YearModels/BodyWidth_SITELEVEL_modeloutputs_YEAR.csv")
+write.csv(ests_s,"output_data/IntraSpp_ModelOutputs/SiteLevel/YearModels/BodyWidth_SITELEVEL_modeloutputs_YEAR.csv")
 
 ######################BH
 
