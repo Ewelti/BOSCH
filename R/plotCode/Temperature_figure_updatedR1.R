@@ -14,8 +14,8 @@ Yr_temps$Date_new <- as.Date(Yr_temps$Date_new, format = "%Y-%m-%d")
 Yr_temps$Year <- as.numeric(format(Yr_temps$Date_new, "%Y"))
 
 # Plot the graph using base plotting
-# svg("plots/temperature_vs_time_updated_r1.svg", width = 7, height = 3.1, pointsize = 12)
-tiff("plots/temperature_vs_time_updated_r1.tiff", width = 10, height = 5, units = "in", res = 600, pointsize = 12, compression = 'lzw')
+# svg("plots/temperature_vs_time_updatedR1.svg", width = 7, height = 3.1, pointsize = 12)
+tiff("plots/temperature_vs_time_updatedR1.tiff", width = 10, height = 5, units = "in", res = 600, pointsize = 12, compression = 'lzw')
 
 # Reduce margins to minimize white space (bottom, left, top, right)
 par(mar = c(5, 4, 1, 1))
