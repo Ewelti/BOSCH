@@ -4,6 +4,7 @@
 #Load packages
 library(tidyverse)
 library(plotrix)
+library(dplyr)
 
 # Read the data into a data frame
 Yr_temps <- read.csv("RawData/Temp_data/BioData_linkedto_TempData.csv", header = TRUE, stringsAsFactors = FALSE)
@@ -12,6 +13,12 @@ Yr_temps <- Yr_temps %>% select(-1)
 # Convert the Date column to the date format
 Yr_temps$Date_new <- as.Date(Yr_temps$Date_new, format = "%Y-%m-%d")
 Yr_temps$Year <- as.numeric(format(Yr_temps$Date_new, "%Y"))
+
+# Mean annual temperatures
+mean_temps_2015_2019 <- Yr_temps |> 
+  filter(Year >= 2015, Year <= 2019) |> 
+  group_by(Site) |> 
+  summarise(mean_temp = mean(Yryly_Temp, na.rm = TRUE))
 
 # Plot the graph using base plotting
 svg("plots/temperature_vs_time_updated.svg", width = 16, height = 4, pointsize = 12)
@@ -40,6 +47,11 @@ points(Yr_temps$Date_new[Yr_temps$Site == "O3"], Yr_temps$Yryly_Temp[Yr_temps$Si
 points(Yr_temps$Date_new[Yr_temps$Site == "W1"], Yr_temps$Yryly_Temp[Yr_temps$Site == "W1"], pch = 24, bg = alpha(4, 0.6),col = alpha(4, 0.6), lwd = 2, cex = 2.5)
 
 # Find the first year of data for each site
+min_year_Auba <- Yr_temps[24, 6]
+min_year_Bieb <- Yr_temps[55, 6]
+min_year_O3 <- Yr_temps[85, 6]
+min_year_W1 <- Yr_temps[112, 6]
+
 min_year_Auba <- Yr_temps[24, 6]
 min_year_Bieb <- Yr_temps[55, 6]
 min_year_O3 <- Yr_temps[85, 6]
