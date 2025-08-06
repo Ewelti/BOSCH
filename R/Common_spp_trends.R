@@ -8,8 +8,11 @@ library(lme4)
 library(scales)
 
 # attach data
-spp <- read.csv("RawData/RMO4sites.csv", header=T)
+spp <- read.csv("RawData/RMO4sites_updatedR1.csv", header=T)
 head(spp)
+
+# check correlation between water temp and CHELSA air temp
+cor.test(x = spp$Yryly_Temp_old, y = spp$Yryly_Temp, alternative = "two.sided", method = "pearson", conf.level = 0.95)
 
 ##scale everything
 #function to add a new column onto the data with scaled vars (with s before their name)
