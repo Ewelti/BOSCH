@@ -2,10 +2,13 @@
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 ##load library
+#install.packages('effects')
 library(data.table)
 library(nlme)
 library(lme4)
 library(scales)
+library(stringr)
+library(effects)
 
 # attach data
 spp <- read.csv("RawData/RMO4sites_updatedR1.csv", header=T)
@@ -174,8 +177,9 @@ length(unique(TTRR$ID_Art))
 ########################################
 ################################################
 #get sizes
-sizes <- unique(spp[,c("ID_Art","spp_mm")])
+sizes <- unique(spp[,c("ID_Art","dry_mass_mg")])
 si <- merge(TTRR,sizes,by="ID_Art")
+head(si)
 #############################################
 ######################################
 
@@ -189,45 +193,57 @@ write.csv(si,"output_data/CommonSppTrends.csv")
 ##import data
 si <- read.csv("output_data/CommonSppTrends.csv", header=T)
 
-##all sites
-sizemsite <- lm(si$Value ~ si$spp_mm + si$site)
-summary(sizemsite)
-
-sizem <- lmer(si$Value ~ si$spp_mm + (1|si$site))
-##sizem <- lmer(si$Value ~ poly(si$spp_mm,2) + (1|si$site))
+##model of trend response to dry mass as polynomial
+sizem <- lmer(si$Value ~ poly(si$dry_mass_mg,2) + (1|si$site))
 summary(sizem)
 coefs <- data.frame(coef(summary(sizem)))
 # use normal distribution to approximate p-value
 coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
 coefs
 
+min(si$dry_mass_mg)
 ##########################
 ##PLOT
 ##
 ##########################
-tiff(filename = "plots/CommonSppTrends_overSize.tiff", width = 6, height = 6, units = 'in', res = 600, compression = 'lzw')
-par(mar=c(4,4,0.2,0.2))
+tiff(filename = "plots/CommonSppTrends_overSize.tiff", width = 6, height = 7, units = 'in', res = 600, compression = 'lzw')
 
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(-0.5,0.5), xlim=c(0,6))
+par(mar=c(4,4,0.2,0.8))
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", xaxt = "n",log="x", ylim=c(-0.46,0.5), xlim=c(0.33,160))
+
+at_x <- c(0.5,1,2,5,10,20,50,100,200) # Determine tick positions
+labels_x <- signif(at_x, digits = 0) # Format labels to 3 significant digits
+axis(side = 1, at = at_x, labels = labels_x) # Add the custom x-axis
 title(ylab="Change in species abundances over time", line=2.5,cex.lab=1.5)
-title(xlab="Species size (mm)", line=2.5,cex.lab=1.5)
-polygon(x=c(-4,-4,10,10),
+title(xlab="Species size (mg)", line=2.5,cex.lab=1.5)
+polygon(x=c(0.1,0.1,1000,1000),
         y=c(-100,0,0,-100), col = "grey80", border = "grey80")
 box(lwd=3)
-points(x=si$spp_mm[si$site=="Aubach"], y=si$Value[si$site=="Aubach"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
-points(x=si$spp_mm[si$site=="Bieber"], y=si$Value[si$site=="Bieber"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
-points(x=si$spp_mm[si$site=="KiO3"], y=si$Value[si$site=="KiO3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
-points(x=si$spp_mm[si$site=="KiW1"], y=si$Value[si$site=="KiW1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
-legend("bottomright", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
-abline(lm(si$Value ~ si$spp_mm), lwd=2)
-abline(lm(si$Value[si$site=="Aubach"] ~ si$spp_mm[si$site=="Aubach"]),lwd=2,col=alpha(1,0.6),lty=2)
-abline(lm(si$Value[si$site=="Bieber"] ~ si$spp_mm[si$site=="Bieber"]),lwd=2,col=alpha(2,0.6),lty=2)
-abline(lm(si$Value[si$site=="KiO3"] ~ si$spp_mm[si$site=="KiO3"]),lwd=2,col=alpha(3,0.6),lty=2)
-abline(lm(si$Value[si$site=="KiW1"] ~ si$spp_mm[si$site=="KiW1"]),lwd=2,col=alpha(4,0.6),lty=2)
+
+mo_pmod <- lmer(Value ~ poly(dry_mass_mg,2) + (1|site), data = si)
+mo_e <- Effect("dry_mass_mg", partial.residuals=T, mo_pmod)
+mo_e <- data.frame(mo_e)
+points(mo_e$fit ~ mo_e$dry_mass_mg,type="l",col=1,lwd=2)
+polygon(c(rev(mo_e$dry_mass_mg), mo_e$dry_mass_mg), c(rev(mo_e$upper), mo_e$lower), col=alpha(1,0.4), border = NA)
+
+points(x=si$dry_mass_mg[si$site=="Aubach"], y=si$Value[si$site=="Aubach"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=si$dry_mass_mg[si$site=="Bieber"], y=si$Value[si$site=="Bieber"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=si$dry_mass_mg[si$site=="KiO3"], y=si$Value[si$site=="KiO3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=si$dry_mass_mg[si$site=="KiW1"], y=si$Value[si$site=="KiW1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+legend("topleft", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
 
 dev.off()
 
 #########################################
+
+##linear lines
+abline(lm(si$Value ~ si$dry_mass_mg), lwd=2)
+abline(lm(si$Value[si$site=="Aubach"] ~ si$dry_mass_mg[si$site=="Aubach"]),lwd=2,col=alpha(1,0.6),lty=2)
+abline(lm(si$Value[si$site=="Bieber"] ~ si$dry_mass_mg[si$site=="Bieber"]),lwd=2,col=alpha(2,0.6),lty=2)
+abline(lm(si$Value[si$site=="KiO3"] ~ si$dry_mass_mg[si$site=="KiO3"]),lwd=2,col=alpha(3,0.6),lty=2)
+abline(lm(si$Value[si$site=="KiW1"] ~ si$dry_mass_mg[si$site=="KiW1"]),lwd=2,col=alpha(4,0.6),lty=2)
+
 
 ##site specific trends- not that interesting
 

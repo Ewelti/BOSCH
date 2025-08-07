@@ -8,7 +8,7 @@ library(lme4)
 library(scales)
 
 # attach data
-spp <- read.csv("RawData/RMO4sites_measuredTaxa.csv", header=T)
+spp <- read.csv("RawData/RMO4sites_measuredTaxa_updatedR1.csv", header=T)
 head(spp)
 
 ##scale everything
