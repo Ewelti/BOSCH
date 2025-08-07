@@ -4,3 +4,5 @@
 .Ruserdata
 ms/*
 RawData/OtherEnvironmentalData/*
+output_data/old/*
+RawData/old/*
