@@ -10,7 +10,7 @@ library(vegan)
 source("R/Add_silhouette_function.R")
 
 # attach data
-intra <- read.csv("RawData/IntraSppBS.csv", header=T)
+intra <- read.csv("RawData/IntraSppBS_updatedR1.csv", header=T)
 head(intra)
 nrow(intra)
 unique(intra$Species)

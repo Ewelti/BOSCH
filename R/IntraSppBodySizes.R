@@ -2,6 +2,7 @@
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 # load libraries
+#install.packages('car')
 library(MuMIn)
 library(car)
 library(nlme)
@@ -9,7 +10,7 @@ library(lme4)
 library(scales)
 
 # attach data
-intra <- read.csv("RawData/IntraSppBS.csv", header=T)
+intra <- read.csv("RawData/IntraSppBS_updatedR1.csv", header=T)
 head(intra)
 nrow(intra)
 unique(intra$Species)
@@ -31,6 +32,7 @@ intra$HW <- as.numeric(intra$Head_Width)
 intra$BW <- as.numeric(intra$Body_Width)
 intra$BH <- as.numeric(intra$Height)
 intra$LA <- as.numeric(intra$Length.of.1st.Antennae)
+intra$DM <- as.numeric(intra$dry_mass_mg)
 
 #log densities
 intra$dens <- as.numeric(intra$density_per_m2)
@@ -44,7 +46,8 @@ summary_intra <- intra %>%
   summarise(
     count = n(),                       # Count of rows per species
     mean_body_length = mean(Body_Length, na.rm = TRUE),     # Mean body length per species
-    mean_head_width = mean(Head_Width, na.rm = TRUE),) %>%  # Mean head width per species
+    mean_head_width = mean(Head_Width, na.rm = TRUE),		# Mean head width per species
+    mean_mass_mg = mean(dry_mass_mg, na.rm = TRUE),) %>%  	# Mean mg per species
   arrange(mean_body_length)
 detach("package:dplyr", unload = TRUE)
 summary_intra
@@ -74,6 +77,16 @@ aa <- intra[which(intra$SppCode=="AA"), ]
 nrow(aa)
 
 ##check response ditributions
+hist(ed$DM)
+hist(po$DM)
+hist(hs$DM)
+hist(ov$DM)
+hist(gr$DM)
+hist(et$DM)
+hist(af$DM)
+hist(br$DM)
+hist(aa$DM)
+
 hist(ed$BL)
 hist(po$BL)
 hist(hs$BL)
@@ -114,6 +127,28 @@ options(na.action = "na.omit")
 unique(intra$SppCode)
 
 #################################YEAR MODELS######################################
+
+######################DM
+
+ests <- NULL
+for(i in unique(intra$SppCode)){
+  sub <- intra[intra$SppCode == i, ]
+	sub<-sub[complete.cases(sub[, "DM"]),]
+	sub<-sub[complete.cases(sub[, "Ldens"]),]
+	sub$SiteShort <- as.factor(sub$SiteShort)
+  	coefs <- data.frame(coef(summary(lmer(DM ~ syr + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+	colnames(coefs)[1] ="Est"
+	colnames(coefs)[2] ="SE"
+	colnames(coefs)[3] ="t"
+	colnames(coefs)[4] ="p"
+	ests.i <- coefs[2:5,1:4]
+  ests.i <- data.frame(SppCode = i, t(ests.i))
+  ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
+} ; rm(i)
+ests
+
+write.csv(ests,"output_data/IntraSpp_ModelOutputs/YearModels/DryMass_modeloutputs_YEAR.csv")
 
 ######################BL
 
@@ -219,6 +254,29 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/YearModels/AntennaeLength_model
 #############################################################################################
 
 #################################Temperature MODELS######################################
+
+######################DM
+
+ests <- NULL
+for(i in unique(intra$SppCode)){
+  sub <- intra[intra$SppCode == i, ]
+	sub<-sub[complete.cases(sub[, "DM"]),]
+	sub<-sub[complete.cases(sub[, "Ldens"]),]
+	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
+	sub$SiteShort <- as.factor(sub$SiteShort)
+  	coefs <- data.frame(coef(summary(lmer(DM ~ sYryly_Temp + poly(sDOY,2) + Ldens + (1|SiteShort), data = sub))))
+	coefs$p.z <- 2 * (1 - pnorm(abs(coefs$t.value)))
+	colnames(coefs)[1] ="Est"
+	colnames(coefs)[2] ="SE"
+	colnames(coefs)[3] ="t"
+	colnames(coefs)[4] ="p"
+	ests.i <- coefs[2:5,1:4]
+  ests.i <- data.frame(SppCode = i, t(ests.i))
+  ests <- rbind(ests, ests.i) ; rm(ests.i, sub)
+} ; rm(i)
+ests
+
+write.csv(ests,"output_data/IntraSpp_ModelOutputs/TemperatureModels/DryMass_modeloutputs_Temperature.csv")
 
 ######################BL
 
@@ -326,6 +384,101 @@ write.csv(tco,"output_data/IntraSpp_ModelOutputs/TemperatureModels/AntennaeLengt
 ##################################################################
 ######################################################################
 ##############################################################################
+
+####DM YEAR plots
+#######################################
+####################################
+#no sci notation
+options(scipen = 999)
+options(na.action = "na.omit")
+
+tiff(filename = "plots/Year_DM.tiff", width = 10, height = 6, units = 'in', res = 600, compression = 'lzw')
+par(mar=c(2,4,4,0.4),mfrow=c(3,3))
+
+
+#####Aphelocheirus aestivalis
+
+head(aa)
+ad_aa <-aa[which(aa$Adult.=="yes"),]
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ad_aa$DM),max(ad_aa$DM)), xlim=c(2000,2020))
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="a. Aphelocheirus aestivalis adults", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=ad_aa$yr[ad_aa$SiteShort=="Auba"], y=ad_aa$DM[ad_aa$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="Bieb"], y=ad_aa$DM[ad_aa$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="O3"], y=ad_aa$DM[ad_aa$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=ad_aa$yr[ad_aa$SiteShort=="W1"], y=ad_aa$DM[ad_aa$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+abline(lm(ad_aa$DM ~ ad_aa$yr), lwd=4, lty=2)
+#abline(lm(ad_aa$DM[ad_aa$SiteShort=="Auba"] ~ ad_aa$yr[ad_aa$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(ad_aa$DM[ad_aa$SiteShort=="Bieb"] ~ ad_aa$yr[ad_aa$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+#abline(lm(ad_aa$DM[ad_aa$SiteShort=="O3"] ~ ad_aa$yr[ad_aa$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=1)
+#abline(lm(ad_aa$DM[ad_aa$SiteShort=="W1"] ~ ad_aa$yr[ad_aa$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=1)
+#legend("topleft", legend=c("Aubach","Bieber","KiO3","KiW1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+
+ju_aa <-aa[which(aa$Adult.=="no"),]
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ju_aa$DM),max(ju_aa$DM)), xlim=c(2000,2020))
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="b. Aphelocheirus aestivalis immatures", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=ju_aa$yr[ju_aa$SiteShort=="Auba"], y=ju_aa$DM[ju_aa$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="Bieb"], y=ju_aa$DM[ju_aa$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="O3"], y=ju_aa$DM[ju_aa$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=ju_aa$yr[ju_aa$SiteShort=="W1"], y=ju_aa$DM[ju_aa$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+abline(lm(ju_aa$DM ~ ju_aa$yr), lwd=4, lty=2)
+#abline(lm(ju_aa$DM[ju_aa$SiteShort=="Auba"] ~ ju_aa$yr[ju_aa$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(ju_aa$DM[ju_aa$SiteShort=="Bieb"] ~ ju_aa$yr[ju_aa$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+#abline(lm(ju_aa$DM[ju_aa$SiteShort=="O3"] ~ ju_aa$yr[ju_aa$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=1)
+#abline(lm(ju_aa$DM[ju_aa$SiteShort=="W1"] ~ ju_aa$yr[ju_aa$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=1)
+#legend("topleft", legend=c("Aubach","Bieber","KiO3","KiW1"),col=c(1,2,3,4),pt.bg=c(1,2,3,4),pt.lwd=1, pch=c(21,22,23,24),lty=0,lwd=2,bty="n",pt.cex=2.5, cex=1.5)
+
+#####Ancylus fluviatilis
+
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(af$DM),max(af$DM)), xlim=c(2000,2020))
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="c. Ancylus fluviatilis", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(x=af$yr[af$SiteShort=="O3"], y=af$DM[af$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="W1"], y=af$DM[af$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="Auba"], y=af$DM[af$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(x=af$yr[af$SiteShort=="Bieb"], y=af$DM[af$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+abline(lm(af$DM ~ af$yr), lwd=4, lty=2)
+#abline(lm(af$DM[af$SiteShort=="O3"] ~ af$yr[af$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=2)
+#abline(lm(af$DM[af$SiteShort=="W1"] ~ af$yr[af$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=2)
+#abline(lm(af$DM[af$SiteShort=="Auba"] ~ af$yr[af$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+#abline(lm(af$DM[af$SiteShort=="Bieb"] ~ af$yr[af$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+
+#####Baetis rhodani
+
+head(br)
+br_sub<-br[complete.cases(br[, "BL"]),]
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(br_sub$DM),max(br_sub$DM)), xlim=c(2000,2020))
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
+#title(xlab="Sampling year", line=2.5,cex.lab=1.5)
+title(main="d. Baetis rhodani", line=0.5,cex.lab=1.5)
+box(lwd=3)
+
+points(jitter(x=br$yr[br$SiteShort=="O3"],3), y=br$DM[br$SiteShort=="O3"], pch=23, bg=alpha(3,0.6),col=alpha(3,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="W1"],3), y=br$DM[br$SiteShort=="W1"], pch=24, bg=alpha(4,0.6),col=alpha(4,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="Auba"],3), y=br$DM[br$SiteShort=="Auba"], pch=21, bg=alpha(1,0.6),col=alpha(1,0.6),lwd=2,cex=2.5)
+points(jitter(x=br$yr[br$SiteShort=="Bieb"],3), y=br$DM[br$SiteShort=="Bieb"], pch=22, bg=alpha(2,0.6),col=alpha(2,0.6),lwd=2,cex=2.5)
+#abline(lm(br$DM ~ br$yr), lwd=4, lty=2)
+abline(lm(br$DM[br$SiteShort=="O3"] ~ br$yr[br$SiteShort=="O3"]),lwd=2,col=alpha(3,0.6),lty=2)
+abline(lm(br$DM[br$SiteShort=="W1"] ~ br$yr[br$SiteShort=="W1"]),lwd=2,col=alpha(4,0.6),lty=2)
+abline(lm(br$DM[br$SiteShort=="Auba"] ~ br$yr[br$SiteShort=="Auba"]),lwd=2,col=alpha(1,0.6),lty=1)
+abline(lm(br$DM[br$SiteShort=="Bieb"] ~ br$yr[br$SiteShort=="Bieb"]),lwd=2,col=alpha(2,0.6),lty=1)
+
+dev.off()
+
+##
+##
 
 ####BL YEAR plots
 #######################################

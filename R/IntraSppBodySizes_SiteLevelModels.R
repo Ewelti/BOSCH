@@ -9,7 +9,7 @@ library(lme4)
 library(scales)
 
 # attach data
-intra <- read.csv("RawData/IntraSppBS.csv", header=T)
+intra <- read.csv("RawData/IntraSppBS_updatedR1.csv", header=T)
 head(intra)
 nrow(intra)
 unique(intra$Species)
@@ -31,6 +31,7 @@ intra$HW <- as.numeric(intra$Head_Width)
 intra$BW <- as.numeric(intra$Body_Width)
 intra$BH <- as.numeric(intra$Height)
 intra$LA <- as.numeric(intra$Length.of.1st.Antennae)
+intra$DM <- as.numeric(intra$dry_mass_mg)
 
 #log densities
 intra$dens <- as.numeric(intra$density_per_m2)
@@ -61,6 +62,27 @@ unique(intra$SppCode)
 #################################YEAR MODELS######################################
 head(intra)
 ######sites overall
+######################DM
+intra$spp_site <- paste(intra$SppCode, intra$SiteShort) #concatinate spp and site
+
+ests <- NULL
+for(i in unique(intra$spp_site)){
+  tryCatch({
+  sub <- intra[intra$spp_site == i, ]
+	sub<-sub[complete.cases(sub[, "DM"]),]
+  	trend.i <- summary(gls(DM ~ syr + sDOY,na.action=na.omit, data = sub))$tTable[2, c(1,2,4)]
+    trend.i <- data.frame(spp_site = i, 
+                        t(trend.i))
+    ests <- rbind(ests, trend.i) ; rm(trend.i, sub)
+    }, error=function(e){cat(unique(sub$taxa),conditionMessage(e), "\n")})
+} ; rm(i)
+ests
+ests[c('spp','site')] <- str_split_fixed(ests$spp_site, ' ', 2)
+ests_s = subset(ests, select = -c(spp_site))
+head(ests_s)
+
+write.csv(ests_s,"output_data/IntraSpp_ModelOutputs/SiteLevel/YearModels/DryMass_SITELEVEL_modeloutputs_YEAR.csv")
+
 ######################BL
 intra$spp_site <- paste(intra$SppCode, intra$SiteShort) #concatinate spp and site
 
@@ -172,6 +194,27 @@ write.csv(ests_s,"output_data/IntraSpp_ModelOutputs/SiteLevel/YearModels/Antenna
 #############################################################################################
 
 #################################Temperature MODELS######################################
+
+######################DM
+
+ests <- NULL
+for(i in unique(intra$spp_site)){
+  tryCatch({
+  sub <- intra[intra$spp_site == i, ]
+	sub<-sub[complete.cases(sub[, "DM"]),]
+	sub<-sub[complete.cases(sub[, "sYryly_Temp"]),]
+  	trend.i <- summary(gls(DM ~ sYryly_Temp + sDOY,na.action=na.omit, data = sub))$tTable[2, c(1,2,4)]
+    trend.i <- data.frame(spp_site = i, 
+                        t(trend.i))
+    ests <- rbind(ests, trend.i) ; rm(trend.i, sub)
+    }, error=function(e){cat(unique(sub$taxa),conditionMessage(e), "\n")})
+} ; rm(i)
+ests
+ests[c('spp','site')] <- str_split_fixed(ests$spp_site, ' ', 2)
+ests_s = subset(ests, select = -c(spp_site))
+head(ests_s)
+
+write.csv(ests_s,"output_data/IntraSpp_ModelOutputs/SiteLevel/TemperatureModels/DryMass_SITELEVEL_modeloutputs_Temperature.csv")
 
 ######################BL
 
