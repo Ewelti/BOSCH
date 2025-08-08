@@ -5,7 +5,7 @@ library(stringr)
 library(tidyr)
 library(scales)
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
-intra <- read.csv("RawData/IntraSppBS.csv", header=T)
+intra <- read.csv("RawData/IntraSppBS_updatedR1.csv", header=T)
 
 # function for adding silhouettes
 source("R/Add_silhouette_function.R")
@@ -93,6 +93,12 @@ af <- els[which(els$spp=="AF"), ]
 br <- els[which(els$spp=="BR"), ]
 aa <- els[which(els$spp=="AA"), ]
 
+
+##################################################################
+##############################################################
+############################################
+#############################
+
 ##plot
 tiff(filename = "plots/Temp_HW_wSilhouettes.tiff", width = 8, height = 10, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(4,2))
@@ -113,7 +119,7 @@ points(x=aa$temp[aa$site=="W1"], y=aa$mean[aa$site=="W1"],type="l",col=alpha(4,0
 add_silhouette(
   upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
   x = 10.5,
-  y = 1.35,
+  y = 1.37,
   width = 0.15,
   height = NULL
 )
@@ -124,17 +130,17 @@ plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(br$
 #title(ylab="Head width (mm)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
-polygon(c(br$temp[br$site=="Auba"],rev(br$temp[br$site=="Auba"])), c(br$l95[br$site=="Auba"],rev(br$u95[br$site=="Auba"])),col=alpha(1,0.2), border=NA)
-points(x=br$temp[br$site=="Auba"], y=br$mean[br$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
+polygon(c(br$temp[br$site=="Auba"],rev(br$temp[br$site=="Auba"])), c(br$l95[br$site=="Auba"],rev(br$u95[br$site=="Auba"])),col=alpha(1,0.8), border=NA)
+points(x=br$temp[br$site=="Auba"], y=br$mean[br$site=="Auba"],type="l",col=alpha(1,0.8), lwd=2)
 polygon(c(br$temp[br$site=="Bieb"],rev(br$temp[br$site=="Bieb"])), c(br$l95[br$site=="Bieb"],rev(br$u95[br$site=="Bieb"])),col=alpha(2,0.2), border=NA)
 points(x=br$temp[br$site=="Bieb"], y=br$mean[br$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
-polygon(c(br$temp[br$site=="O3"],rev(br$temp[br$site=="O3"])), c(br$l95[br$site=="O3"],rev(br$u95[br$site=="O3"])),col=alpha(3,0.2), border=NA)
-points(x=br$temp[br$site=="O3"], y=br$mean[br$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
-polygon(c(br$temp[br$site=="W1"],rev(br$temp[br$site=="W1"])), c(br$l95[br$site=="W1"],rev(br$u95[br$site=="W1"])),col=alpha(4,0.8), border=NA)
-points(x=br$temp[br$site=="W1"], y=br$mean[br$site=="W1"],type="l",col=alpha(4,0.8), lwd=2)
+polygon(c(br$temp[br$site=="O3"],rev(br$temp[br$site=="O3"])), c(br$l95[br$site=="O3"],rev(br$u95[br$site=="O3"])),col=alpha(3,0.8), border=NA)
+points(x=br$temp[br$site=="O3"], y=br$mean[br$site=="O3"],type="l",col=alpha(3,0.8), lwd=2)
+polygon(c(br$temp[br$site=="W1"],rev(br$temp[br$site=="W1"])), c(br$l95[br$site=="W1"],rev(br$u95[br$site=="W1"])),col=alpha(4,0.2), border=NA)
+points(x=br$temp[br$site=="W1"], y=br$mean[br$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/baetis_rhodani.svg",
-  x = 9,
+  x = 9.5,
   y = 1.25,
   width = 0.5,
   height = NULL
@@ -150,8 +156,8 @@ polygon(c(et$temp[et$site=="Auba"],rev(et$temp[et$site=="Auba"])), c(et$l95[et$s
 points(x=et$temp[et$site=="Auba"], y=et$mean[et$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
 polygon(c(et$temp[et$site=="Bieb"],rev(et$temp[et$site=="Bieb"])), c(et$l95[et$site=="Bieb"],rev(et$u95[et$site=="Bieb"])),col=alpha(2,0.2), border=NA)
 points(x=et$temp[et$site=="Bieb"], y=et$mean[et$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
-polygon(c(et$temp[et$site=="O3"],rev(et$temp[et$site=="O3"])), c(et$l95[et$site=="O3"],rev(et$u95[et$site=="O3"])),col=alpha(3,0.2), border=NA)
-points(x=et$temp[et$site=="O3"], y=et$mean[et$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
+polygon(c(et$temp[et$site=="O3"],rev(et$temp[et$site=="O3"])), c(et$l95[et$site=="O3"],rev(et$u95[et$site=="O3"])),col=alpha(3,0.8), border=NA)
+points(x=et$temp[et$site=="O3"], y=et$mean[et$site=="O3"],type="l",col=alpha(3,0.8), lwd=2)
 #polygon(c(et$temp[et$site=="W1"],rev(et$temp[et$site=="W1"])), c(et$l95[et$site=="W1"],rev(et$u95[et$site=="W1"])),col=alpha(4,0.2), border=NA)
 #points(x=et$temp[et$site=="W1"], y=et$mean[et$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
@@ -168,18 +174,18 @@ plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ed$
 #title(ylab="Head width (mm)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
-polygon(c(ed$temp[ed$site=="Auba"],rev(ed$temp[ed$site=="Auba"])), c(ed$l95[ed$site=="Auba"],rev(ed$u95[ed$site=="Auba"])),col=alpha(1,0.2), border=NA)
-points(x=ed$temp[ed$site=="Auba"], y=ed$mean[ed$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
-polygon(c(ed$temp[ed$site=="Bieb"],rev(ed$temp[ed$site=="Bieb"])), c(ed$l95[ed$site=="Bieb"],rev(ed$u95[ed$site=="Bieb"])),col=alpha(2,0.2), border=NA)
-points(x=ed$temp[ed$site=="Bieb"], y=ed$mean[ed$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
+polygon(c(ed$temp[ed$site=="Auba"],rev(ed$temp[ed$site=="Auba"])), c(ed$l95[ed$site=="Auba"],rev(ed$u95[ed$site=="Auba"])),col=alpha(1,0.8), border=NA)
+points(x=ed$temp[ed$site=="Auba"], y=ed$mean[ed$site=="Auba"],type="l",col=alpha(1,0.8), lwd=2)
+polygon(c(ed$temp[ed$site=="Bieb"],rev(ed$temp[ed$site=="Bieb"])), c(ed$l95[ed$site=="Bieb"],rev(ed$u95[ed$site=="Bieb"])),col=alpha(2,0.8), border=NA)
+points(x=ed$temp[ed$site=="Bieb"], y=ed$mean[ed$site=="Bieb"],type="l",col=alpha(2,0.8), lwd=2)
 polygon(c(ed$temp[ed$site=="O3"],rev(ed$temp[ed$site=="O3"])), c(ed$l95[ed$site=="O3"],rev(ed$u95[ed$site=="O3"])),col=alpha(3,0.2), border=NA)
 points(x=ed$temp[ed$site=="O3"], y=ed$mean[ed$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
 polygon(c(ed$temp[ed$site=="W1"],rev(ed$temp[ed$site=="W1"])), c(ed$l95[ed$site=="W1"],rev(ed$u95[ed$site=="W1"])),col=alpha(4,0.8), border=NA)
 points(x=ed$temp[ed$site=="W1"], y=ed$mean[ed$site=="W1"],type="l",col=alpha(4,0.8), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/Ephemera_danica.svg",
-  x = 9,
-  y = 0.8,
+  x = 9.5,
+  y = 2.2,
   width = 0.5,
   height = NULL
 )
@@ -190,18 +196,18 @@ plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(hs$
 title(ylab="Head width (mm)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
-polygon(c(hs$temp[hs$site=="Auba"],rev(hs$temp[hs$site=="Auba"])), c(hs$l95[hs$site=="Auba"],rev(hs$u95[hs$site=="Auba"])),col=alpha(1,0.8), border=NA)
-points(x=hs$temp[hs$site=="Auba"], y=hs$mean[hs$site=="Auba"],type="l",col=alpha(1,0.8), lwd=2)
+polygon(c(hs$temp[hs$site=="Auba"],rev(hs$temp[hs$site=="Auba"])), c(hs$l95[hs$site=="Auba"],rev(hs$u95[hs$site=="Auba"])),col=alpha(1,0.2), border=NA)
+points(x=hs$temp[hs$site=="Auba"], y=hs$mean[hs$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
 polygon(c(hs$temp[hs$site=="Bieb"],rev(hs$temp[hs$site=="Bieb"])), c(hs$l95[hs$site=="Bieb"],rev(hs$u95[hs$site=="Bieb"])),col=alpha(2,0.2), border=NA)
 points(x=hs$temp[hs$site=="Bieb"], y=hs$mean[hs$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
 polygon(c(hs$temp[hs$site=="O3"],rev(hs$temp[hs$site=="O3"])), c(hs$l95[hs$site=="O3"],rev(hs$u95[hs$site=="O3"])),col=alpha(3,0.2), border=NA)
 points(x=hs$temp[hs$site=="O3"], y=hs$mean[hs$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
-polygon(c(hs$temp[hs$site=="W1"],rev(hs$temp[hs$site=="W1"])), c(hs$l95[hs$site=="W1"],rev(hs$u95[hs$site=="W1"])),col=alpha(4,0.8), border=NA)
-points(x=hs$temp[hs$site=="W1"], y=hs$mean[hs$site=="W1"],type="l",col=alpha(4,0.8), lwd=2)
+polygon(c(hs$temp[hs$site=="W1"],rev(hs$temp[hs$site=="W1"])), c(hs$l95[hs$site=="W1"],rev(hs$u95[hs$site=="W1"])),col=alpha(4,0.2), border=NA)
+points(x=hs$temp[hs$site=="W1"], y=hs$mean[hs$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/hydropsyche_siltalai.svg",
-  x = 9,
-  y = 1.25,
+  x = 9.5,
+  y = 1.5,
   width = 0.5,
   height = NULL
 )
@@ -214,16 +220,16 @@ title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
 polygon(c(ov$temp[ov$site=="Auba"],rev(ov$temp[ov$site=="Auba"])), c(ov$l95[ov$site=="Auba"],rev(ov$u95[ov$site=="Auba"])),col=alpha(1,0.2), border=NA)
 points(x=ov$temp[ov$site=="Auba"], y=ov$mean[ov$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
-polygon(c(ov$temp[ov$site=="Bieb"],rev(ov$temp[ov$site=="Bieb"])), c(ov$l95[ov$site=="Bieb"],rev(ov$u95[ov$site=="Bieb"])),col=alpha(2,0.8), border=NA)
-points(x=ov$temp[ov$site=="Bieb"], y=ov$mean[ov$site=="Bieb"],type="l",col=alpha(2,0.8), lwd=2)
+polygon(c(ov$temp[ov$site=="Bieb"],rev(ov$temp[ov$site=="Bieb"])), c(ov$l95[ov$site=="Bieb"],rev(ov$u95[ov$site=="Bieb"])),col=alpha(2,0.2), border=NA)
+points(x=ov$temp[ov$site=="Bieb"], y=ov$mean[ov$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
 polygon(c(ov$temp[ov$site=="O3"],rev(ov$temp[ov$site=="O3"])), c(ov$l95[ov$site=="O3"],rev(ov$u95[ov$site=="O3"])),col=alpha(3,0.2), border=NA)
 points(x=ov$temp[ov$site=="O3"], y=ov$mean[ov$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
 polygon(c(ov$temp[ov$site=="W1"],rev(ov$temp[ov$site=="W1"])), c(ov$l95[ov$site=="W1"],rev(ov$u95[ov$site=="W1"])),col=alpha(4,0.2), border=NA)
 points(x=ov$temp[ov$site=="W1"], y=ov$mean[ov$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/Orectochilus_villosus.svg",
-  x = 8.9,
-  y = 1.65,
+  x = 9.25,
+  y = 0.35,
   width = 0.2,
   height = NULL
 )
@@ -238,14 +244,14 @@ polygon(c(po$temp[po$site=="Auba"],rev(po$temp[po$site=="Auba"])), c(po$l95[po$s
 points(x=po$temp[po$site=="Auba"], y=po$mean[po$site=="Auba"],type="l",col=alpha(1,0.2), lwd=2)
 polygon(c(po$temp[po$site=="Bieb"],rev(po$temp[po$site=="Bieb"])), c(po$l95[po$site=="Bieb"],rev(po$u95[po$site=="Bieb"])),col=alpha(2,0.2), border=NA)
 points(x=po$temp[po$site=="Bieb"], y=po$mean[po$site=="Bieb"],type="l",col=alpha(2,0.2), lwd=2)
-polygon(c(po$temp[po$site=="O3"],rev(po$temp[po$site=="O3"])), c(po$l95[po$site=="O3"],rev(po$u95[po$site=="O3"])),col=alpha(3,0.8), border=NA)
-points(x=po$temp[po$site=="O3"], y=po$mean[po$site=="O3"],type="l",col=alpha(3,0.8), lwd=2)
+polygon(c(po$temp[po$site=="O3"],rev(po$temp[po$site=="O3"])), c(po$l95[po$site=="O3"],rev(po$u95[po$site=="O3"])),col=alpha(3,0.2), border=NA)
+points(x=po$temp[po$site=="O3"], y=po$mean[po$site=="O3"],type="l",col=alpha(3,0.2), lwd=2)
 polygon(c(po$temp[po$site=="W1"],rev(po$temp[po$site=="W1"])), c(po$l95[po$site=="W1"],rev(po$u95[po$site=="W1"])),col=alpha(4,0.2), border=NA)
 points(x=po$temp[po$site=="W1"], y=po$mean[po$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
   x = 9,
-  y = 0.35,
+  y = 0.65,
   width = 0.45,
   height = NULL
 )

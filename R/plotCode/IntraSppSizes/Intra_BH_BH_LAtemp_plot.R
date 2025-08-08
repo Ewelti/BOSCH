@@ -8,7 +8,7 @@ library(scales)
 #install.packages("remotes")
 #remotes::install_github("palaeoverse/rphylopic")
 setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
-intra <- read.csv("RawData/IntraSppBS.csv", header=T)
+intra <- read.csv("RawData/IntraSppBS_updatedR1.csv", header=T)
 
 # function for adding silhouettes
 source("R/Add_silhouette_function.R")
@@ -89,6 +89,8 @@ dim(els)
 gr <- els[which(els$spp=="GR"), ]
 af <- els[which(els$spp=="AF"), ]
 
+
+##########################################################
 ##plot
 tiff(filename = "plots/Temp_BW_BH_LA_wSilhouette.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(2,2))
@@ -108,8 +110,8 @@ polygon(c(af$temp[af$site=="W1"],rev(af$temp[af$site=="W1"])), c(af$l95[af$site=
 points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/ancylus_fluviatilis.svg",
-  x = 12,
-  y = 6.5,
+  x = 9.3,
+  y = 4.2,
   width = 0.5,
   height = NULL
 )
@@ -175,8 +177,8 @@ polygon(c(af$temp[af$site=="W1"],rev(af$temp[af$site=="W1"])), c(af$l95[af$site=
 points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/ancylus_fluviatilis.svg",
-  x = 12,
-  y = 3.5,
+  x = 9.5,
+  y = 2.7,
   width = 0.5,
   height = NULL
 )
@@ -251,7 +253,7 @@ title(main="c. Gammarus roeselii",bty="n",cex.main=1.5)
 
 ##
 plot(1, 1,type= "n",bty ="n",axes=F,frame.plot=F, xaxt='n', ann=FALSE, yaxt='n')
-legend("top", legend=c("Aubach","Kinzig O3","Kinzig W1"),col=c(1,3,4),pt.lwd=1,lty=1,lwd=8,cex=2,bty="n")
+legend("top", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,3,4),pt.lwd=1,lty=1,lwd=8,cex=2,bty="n")
 
 ##
 dev.off()

@@ -15,11 +15,7 @@ nrow(intra)
 unique(intra$Species)
 
 #fix some problem where these variables are not numeric
-intra$BL <- as.numeric(intra$Body_Length) 
-intra$HW <- as.numeric(intra$Head_Width)
-intra$BW <- as.numeric(intra$Body_Width)
-intra$BH <- as.numeric(intra$Height)
-intra$LA <- as.numeric(intra$Length.of.1st.Antennae)
+intra$DM <- as.numeric(intra$dry_mass_mg) 
 
 ##scale everything
 #function to add a new column onto the data with scaled vars (with s before their name)
@@ -38,6 +34,7 @@ intra$Ldens <- log10(intra$dens+1)
 
 int <- intra[complete.cases(intra$Yryly_Temp),]
 head(int)
+dim(intra)
 
 ########calculate BL estimates for a given Temp (marginal effects) for each spp and site
 int$spp_site <- paste(int$SiteShort, int$SppCode)
@@ -46,8 +43,8 @@ for(i in unique(int$spp_site)){
   tryCatch({
   sub <- int[int$spp_site == i, ]
 	sub<-sub[complete.cases(sub[, "Ldens"]),]
-	sub<-sub[complete.cases(sub[, "BL"]),]
-	mod<-lm(BL~ Yryly_Temp + sDOY + Ldens, data=sub)
+	sub<-sub[complete.cases(sub[, "DM"]),]
+	mod<-lm(DM~ Yryly_Temp + sDOY + Ldens, data=sub)
 	model_effects <- effect("Yryly_Temp", mod, xlevels=list(sDOY=mean(sub$sDOY), Ldens=mean(sub$Ldens)))
 	suma <- rbind(summary(model_effects)[[3]],summary(model_effects)[[5]],summary(model_effects)[[7]])
 	suma <- rbind(colnames(suma),suma)
@@ -94,12 +91,12 @@ br <- els[which(els$spp=="BR"), ]
 aa <- els[which(els$spp=="AA"), ]
 
 ##plot
-tiff(filename = "plots/Temp_BL.tiff_wSilhouettes.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Temp_DM.tiff_wSilhouettes.tiff", width = 8, height = 7, units = 'in', res = 600, compression = 'lzw')
 par(mar=c(4,5,4,0.5),mfrow=c(3,3))
 
 ###############Ancylus fluviatilis
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(af$l95),max(af$u95)), xlim=c(min(af$temp),max(af$temp)))
-title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
 polygon(c(af$temp[af$site=="Auba"],rev(af$temp[af$site=="Auba"])), c(af$l95[af$site=="Auba"],rev(af$u95[af$site=="Auba"])),col=alpha(1,0.2),border=NA)
@@ -113,7 +110,7 @@ points(x=af$temp[af$site=="W1"], y=af$mean[af$site=="W1"],type="l",col=alpha(4,0
 add_silhouette(
   upload_img = "Silhouettes/ancylus_fluviatilis.svg",
   x = 9.5,
-  y = 3,
+  y = 1.5,
   width = 0.5,
   height = NULL
 )
@@ -134,8 +131,8 @@ polygon(c(aa$temp[aa$site=="W1"],rev(aa$temp[aa$site=="W1"])), c(aa$l95[aa$site=
 points(x=aa$temp[aa$site=="W1"], y=aa$mean[aa$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
-  x = 11,
-  y = 5.2,
+  x = 10,
+  y = 3,
   width = 0.25,
   height = NULL
 )
@@ -156,8 +153,8 @@ polygon(c(br$temp[br$site=="W1"],rev(br$temp[br$site=="W1"])), c(br$l95[br$site=
 points(x=br$temp[br$site=="W1"], y=br$mean[br$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/baetis_rhodani.svg",
-  x = 12,
-  y = 4,
+  x = 12.2,
+  y = 0.4,
   width = 0.75,
   height = NULL
 )
@@ -166,7 +163,7 @@ legend("topleft", legend=c("Aubach","Bieber","Kinzig O3","Kinzig W1"),col=c(1,2,
            
 ###############Eiseniella tetraedra
 plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,max(et$u95)), xlim=c(min(et$temp),max(et$temp)))
-title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
 polygon(c(et$temp[et$site=="Auba"],rev(et$temp[et$site=="Auba"])), c(et$l95[et$site=="Auba"],rev(et$u95[et$site=="Auba"])),col=alpha(1,0.2),border=NA)
@@ -179,15 +176,15 @@ polygon(c(et$temp[et$site=="W1"],rev(et$temp[et$site=="W1"])), c(et$l95[et$site=
 points(x=et$temp[et$site=="W1"], y=et$mean[et$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/eiseniella_tetraedra.svg",
-  x = 9.4,
-  y = 50,
+  x = 9.3,
+  y = 1.8,
   width = 0.2,
   height = NULL
 )
 title(main="d. Eiseniella tetraedra",bty="n",cex.main=1.5)
 
 ###############Ephemera danica
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ed$l95),max(ed$u95)), xlim=c(min(ed$temp),max(ed$temp)))
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,max(ed$u95)), xlim=c(min(ed$temp),max(ed$temp)))
 #title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
 #title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
@@ -202,7 +199,7 @@ points(x=ed$temp[ed$site=="W1"], y=ed$mean[ed$site=="W1"],type="l",col=alpha(4,0
 add_silhouette(
   upload_img = "Silhouettes/Ephemera_danica.svg",
   x = 9.5,
-  y = 25,
+  y = 20,
   width = 0.75,
   height = NULL
 )
@@ -223,16 +220,16 @@ polygon(c(gr$temp[gr$site=="W1"],rev(gr$temp[gr$site=="W1"])), c(gr$l95[gr$site=
 points(x=gr$temp[gr$site=="W1"], y=gr$mean[gr$site=="W1"],type="l",col=alpha(4,0.8), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/Gammarus_roselii.svg",
-  x = 10.5,
-  y = 10.25,
+  x = 10,
+  y = 7,
   width = 0.35,
   height = NULL
 )
 title(main="f. Gammarus roeselii",bty="n",cex.main=1.5)
  
 ###############Hydropsyche siltalai
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(hs$l95),max(hs$u95)), xlim=c(min(hs$temp),max(hs$temp)))
-title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,max(hs$u95)), xlim=c(min(hs$temp),max(hs$temp)))
+title(ylab="Body size (mg)", line=2.7,cex.lab=1.5)
 title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
 polygon(c(hs$temp[hs$site=="Auba"],rev(hs$temp[hs$site=="Auba"])), c(hs$l95[hs$site=="Auba"],rev(hs$u95[hs$site=="Auba"])),col=alpha(1,0.2),border=NA)
@@ -245,15 +242,15 @@ polygon(c(hs$temp[hs$site=="W1"],rev(hs$temp[hs$site=="W1"])), c(hs$l95[hs$site=
 points(x=hs$temp[hs$site=="W1"], y=hs$mean[hs$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/hydropsyche_siltalai.svg",
-  x = 9.3,
-  y = 6.5,
+  x = 9.5,
+  y = 2,
   width = 0.75,
   height = NULL
 )
 title(main="g. Hydropsyche siltalai",bty="n",cex.main=1.5)
  
 ###############Orectochilus villosus
-plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(min(ov$l95),max(ov$u95)), xlim=c(min(ov$temp),max(ov$temp)))
+plot(1, 1, type= "n",las=1,main="",cex.main=1.5,ylab="", xlab="", ylim=c(0,max(ov$u95)), xlim=c(min(ov$temp),max(ov$temp)))
 #title(ylab="Body length (mm)", line=2.7,cex.lab=1.5)
 title(xlab="Temperature (\u00B0C)", line=2.5,cex.lab=1.5)
 box(lwd=3)
@@ -268,7 +265,7 @@ points(x=ov$temp[ov$site=="W1"], y=ov$mean[ov$site=="W1"],type="l",col=alpha(4,0
 add_silhouette(
   upload_img = "Silhouettes/Orectochilus_villosus.svg",
   x = 9.5,
-  y = 4,
+  y = 40,
   width = 0.4,
   height = NULL
 )
@@ -289,8 +286,8 @@ polygon(c(po$temp[po$site=="W1"],rev(po$temp[po$site=="W1"])), c(po$l95[po$site=
 points(x=po$temp[po$site=="W1"], y=po$mean[po$site=="W1"],type="l",col=alpha(4,0.2), lwd=2)
 add_silhouette(
   upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
-  x = 9.1,
-  y = 12.5,
+  x = 9.2,
+  y = 1.3,
   width = 0.6,
   height = NULL
 )
