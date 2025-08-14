@@ -106,8 +106,8 @@ arrows(af$yr[af$site=="O3"]+0.05, af$DM_est[af$site=="O3"]-af$DM_SE[af$site=="O3
 arrows(af$yr[af$site=="W1"]+0.15, af$DM_est[af$site=="W1"]-af$DM_SE[af$site=="W1"], af$yr[af$site=="W1"]+0.15, af$DM_est[af$site=="W1"]+af$DM_SE[af$site=="W1"],col=alpha(4,0.2), lwd=2,length=0.05, angle=90, code=3)
 add_silhouette(
   upload_img = "Silhouettes/ancylus_fluviatilis.svg",
-  x = 2002,
-  y = min(af$DM_est-af$DM_SE-1) + 1.3,
+  x = 2003,
+  y = min(af$DM_est-af$DM_SE-1) + 1.1,
   width = 2.5,
   height = NULL
 )
@@ -132,7 +132,7 @@ arrows(aa$yr[aa$site=="W1"]+0.15, aa$DM_est[aa$site=="W1"]-aa$DM_SE[aa$site=="W1
 add_silhouette(
   upload_img = "Silhouettes/aphelocheirus_aestivalis.svg",
   x = 2002,
-  y = min(aa$DM_est - aa$DM_SE - 1) + 2,
+  y = min(aa$DM_est - aa$DM_SE - 1) + 1.7,
   width = 2.5,
   height = NULL
 )
@@ -159,7 +159,7 @@ arrows(br$yr[br$site=="W1"]+0.15, br$DM_est[br$site=="W1"]-br$DM_SE[br$site=="W1
 add_silhouette(
   upload_img = "Silhouettes/baetis_rhodani.svg",
   x = 2002,
-  y = min(br$DM_est-br$DM_SE-1)+ 4,
+  y = min(br$DM_est-br$DM_SE-1)+ 5.4,
   width = 4,
   height = NULL
 )
@@ -191,7 +191,7 @@ arrows(et$yr[et$site=="W1"]+0.15, et$DM_est[et$site=="W1"]-et$DM_SE[et$site=="W1
 add_silhouette(
   upload_img = "Silhouettes/eiseniella_tetraedra.svg",
   x = 2002,
-  y = min(et$DM_est-et$DM_SE-1) + 1,
+  y = min(et$DM_est-et$DM_SE-1) + 0.95,
   width = 3,
   height = NULL
 )
@@ -218,8 +218,8 @@ arrows(ed$yr[ed$site=="O3"]+0.05, ed$DM_est[ed$site=="O3"]-ed$DM_SE[ed$site=="O3
 arrows(ed$yr[ed$site=="W1"]+0.15, ed$DM_est[ed$site=="W1"]-ed$DM_SE[ed$site=="W1"], ed$yr[ed$site=="W1"]+0.15, ed$DM_est[ed$site=="W1"]+ed$DM_SE[ed$site=="W1"],col=alpha(4,0.2), lwd=2,length=0.05, angle=90, code=3)
 add_silhouette(
   upload_img = "Silhouettes/Ephemera_danica.svg",
-  x = 2002,
-  y = min(ed$DM_est-ed$DM_SE-1) + 2.75,
+  x = 2001.25,
+  y = min(ed$DM_est-ed$DM_SE-1) + 2.2,
   width = 3.5,
   height = NULL
 )
@@ -305,7 +305,7 @@ arrows(ov$yr[ov$site=="W1"]+0.15, ov$DM_est[ov$site=="W1"]-ov$DM_SE[ov$site=="W1
 add_silhouette(
   upload_img = "Silhouettes/Orectochilus_villosus.svg",
   x = 2002,
-  y = min(ov$DM_est-ov$DM_SE-1) + 40,
+  y = min(ov$DM_est-ov$DM_SE-1) + 57,
   width = 2.5,
   height = NULL
 )
@@ -332,7 +332,7 @@ arrows(po$yr[po$site=="W1"]+0.15, po$DM_est[po$site=="W1"]-po$DM_SE[po$site=="W1
 add_silhouette(
   upload_img = "Silhouettes/Prodiamesa_olivacea.svg",
   x = 2002,
-  y = min(po$DM_est-po$DM_SE-1) + 2,
+  y = min(po$DM_est-po$DM_SE-1) + 3,
   width = 3.5,
   height = NULL
 )
