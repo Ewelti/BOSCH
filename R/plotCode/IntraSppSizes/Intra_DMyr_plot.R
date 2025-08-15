@@ -73,7 +73,7 @@ options(scipen = 999)
 options(na.action = "na.omit")
 
 ##BL plot##
-tiff(filename = "plots/Year_DM_wSilhouettes.tiff", width = 12, height = 12, units = 'in', res = 600, compression = 'lzw')
+tiff(filename = "plots/Year_DM_wSilhouettes.tiff", width = 12, height = 12, units = 'in', res = 450, compression = 'lzw')
 
 ##layout
 layout_mat <- matrix(c(1:16), nrow = 4, ncol = 4, byrow = TRUE)
