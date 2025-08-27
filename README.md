@@ -2,6 +2,7 @@
 
 [![R](https://img.shields.io/badge/R-%3E%3D4.2.2-blue)](https://www.r-project.org/)
 [![DOI](https://img.shields.io/badge/DOI-10.1002%2Foik.11596-blue)](https://doi.org/10.1002/oik.11596)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Overview
 
