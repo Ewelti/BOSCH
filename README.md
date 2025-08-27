@@ -1,7 +1,6 @@
 # BOSCH: Body sizes of aquatic macroinvertebrates from the Rhine-Main-Observatory
 
 [![DOI](https://img.shields.io/badge/DOI-10.1002%2Foik.11596-blue)](https://doi.org/10.1002/oik.11596)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ## Overview
 
@@ -28,62 +27,34 @@ BOSCH/
 ├── .gitignore
 ├── .Rhistory
 ├── BOSCH.Rproj
-├── RawData/                           # Original input data
-│   ├── IntraSppBS_updatedR1.csv      # Intraspecific body size measurements
-│   ├── NineSppDensities_updatedR1.csv # Density data for nine focal species
-│   ├── RMO4sites_updatedR1.csv       # Main community data from four sites
-│   ├── RMO4sites_measuredTaxa_updatedR1.csv # Measured taxa data
-│   ├── RMO_Intra_Interspecific_sizes.xlsx   # Combined size data
-│   ├── RMAO_Traits.xlsx              # Trait database information
-│   ├── Master_document_size_to_biomass_calculations.xlsx # Size-biomass conversions
-│   ├── OtherEnvironmentalData/       # Additional environmental variables
-│   └── Temp_data/                    # Temperature data files
-├── output_data/                       # Processed data and results
-│   ├── BioData_linkedto_TempData_updatedR1.csv # Linked biological-temperature data
-│   ├── CommonSppTrends.csv           # Common species trend results
-│   ├── CWM.csv                       # Community Weighted Mean calculations
-│   ├── Measured9SppTrends_bySite.csv # Species trends by site
-│   ├── Measured9SppTrends_overall.csv # Overall species trends
-│   ├── RMO4sites_updatedR1_stepsToCWM.xlsx # CWM calculation steps
-│   └── IntraSpp_ModelOutputs/        # Intraspecific model results
-├── R/                                # Analysis scripts
-│   ├── YrlyMeanCalculations_updatedR1.R      # Step 1: Annual mean calculations
-│   ├── TempInterpolation.R                   # Temperature data processing
-│   ├── IntraSppBodySizes.R                   # Intraspecific body size analysis
-│   ├── IntraSppBodySizes_SiteLevelModels.R   # Site-level intraspecific models
-│   ├── InterSppBodySizes.R                   # Interspecific body size analysis
-│   ├── Common_spp_trends.R                   # Common species trend analysis
-│   ├── Measured_9_spp_trends.R               # Nine species trend analysis
-│   ├── Add_silhouette_function.R             # Function for adding silhouettes
-│   └── plotCode/                             # Visualization scripts
-│       ├── Temperature_figure_updatedR1.R    # Temperature visualization
-│       ├── InterSppBodySizes_CWMplot_updatedR1.R # CWM plotting
-│       ├── NineSpp_densities.R               # Nine species density plots
-│       └── IntraSppSizes/                    # Intraspecific plotting scripts
-│           ├── Intra_BLtemp_plot.R           # Body length vs temperature
-│           ├── Intra_BLyr_plot.R             # Body length vs year
-│           ├── Intra_DMtemp_plot.R           # Dry mass vs temperature
-│           ├── Intra_DMyr_plot.R             # Dry mass vs year
-│           ├── Intra_HWtemp_plot.R           # Head width vs temperature
-│           ├── Intra_HWyr_plot.R             # Head width vs year
-│           ├── Intra_BH_BH_LAtemp_plot.R     # Body height vs temperature
-│           └── Intra_BH_BH_LAyr_plot.R       # Body height vs year
-├── plots/                            # Generated figures and tables
-│   ├── temperature_vs_time_updatedR1.tiff    # Temperature time series
-│   ├── CWM_overYrandTemp.tiff               # CWM over year and temperature
-│   ├── CommonSppTrends_overSize.tiff        # Common species size trends
-│   ├── Year_BL_wSilhouettes.tiff            # Yearly body length trends
-│   ├── Year_DM_wSilhouettes.tiff            # Yearly dry mass trends
-│   ├── Year_HW_wSilhouette.tiff             # Yearly head width trends
-│   ├── Year_Dens_wSilhouette.tiff           # Yearly density trends
-│   ├── Temp_BL.tiff_wSilhouettes.tiff       # Temperature-body length plots
-│   ├── Temp_DM.tiff_wSilhouettes.tiff       # Temperature-dry mass plots
-│   ├── Temp_HW_wSilhouettes.tiff            # Temperature-head width plots
-│   ├── Table1.xlsx                          # Summary table
-│   ├── Tables_T1-T8.xlsx                    # Publication tables
-│   └── Supplemental_Information_2_RMObodysizes.xlsx # Supplemental materials
-├── Silhouettes/                      # Custom invertebrate silhouette images for plotting
-└── Invert_silhouettes/              # Additional silhouette resources
+├── RawData/                          # Original input data
+│   ├── IntraSppBS_updatedR1.csv     # Intraspecific body size measurements
+│   ├── RMO4sites_updatedR1.csv      # Main community data from four sites
+│   ├── Master_document_size_to_biomass_calculations.xlsx
+│   ├── OtherEnvironmentalData/
+│   └── Temp_data/
+├── output_data/                     # Processed data and model results
+│   ├── BioData_linkedto_TempData_updatedR1.csv
+│   ├── CWM.csv                      # Community Weighted Mean calculations
+│   └── IntraSpp_ModelOutputs/       # Intraspecific model results
+│       ├── SiteLevel/
+│       │   ├── TemperatureModels/
+│       │   └── YearModels/
+│       ├── TemperatureModels/
+│       └── YearModels/
+├── R/                               # Analysis scripts
+│   ├── YrlyMeanCalculations_updatedR1.R
+│   ├── IntraSppBodySizes.R
+│   ├── InterSppBodySizes.R
+│   ├── Add_silhouette_function.R
+│   └── plotCode/
+│       └── IntraSppSizes/
+├── plots/                           # Generated figures and tables
+│   ├── CWM_overYrandTemp.tiff
+│   ├── Year_BL_wSilhouettes.tiff
+│   └── Tables_T1-T8.xlsx
+├── Silhouettes/                     # Custom invertebrate silhouette images
+└── Invert_silhouettes/              # Species-specific silhouette files (SVG format)
 ```
 
 ## Data Description
@@ -324,16 +295,9 @@ If you use this code or data in your research, please cite:
 
 Mittag, D.C., Baker, N.J., Antão, L.H., Kuczynski, L., Haase, P., Welti, E.A.R. (2025). Increases in interspecific but mixed trends in intraspecific body sizes in German stream macroinvertebrates across two decades. *Oikos*, DOI: 10.1002/oik.11596
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
-- Rhine-Main-Observatory for long-term data collection
-- Senckenberg research station in Gelnhausen, Germany for specimen curation
-- freshwaterecology.info for trait database information
-- All contributors to the long-term monitoring program
+- LTER Site: Rhine-Main-Observatory for long-term data collection (https://deims.org/9f9ba137-342d-4813-ae58-a60911c3abc1)
 
 ---
 
