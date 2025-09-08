@@ -3,6 +3,8 @@ setwd("C:/Users/elwel/OneDrive/Desktop/aquatic_data/git/BOSCH/")
 
 # load libraries
 library(scales)
+library(lme4)
+library(effects)
 
 # attach data
 inter <- read.csv("output_data/CWM.csv", header=T)
